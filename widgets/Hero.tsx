@@ -1,4 +1,5 @@
 import { Container } from "@/components/Container";
+import { Privacy } from "./Privacy";
 
 export const Hero = () => {
   return (
