@@ -1,5 +1,6 @@
 import { Container } from "@/components/Container";
 
+
 export const Hero = () => {
   return (
     <div className="bg-hero text-[#f6f6f6]">
@@ -15,6 +16,7 @@ export const Hero = () => {
           Shop Now
         </button>
       </Container>
+
     </div>
   );
 };
