@@ -16,7 +16,6 @@ export const Hero = () => {
           Shop Now
         </button>
       </Container>
-      <ProductSwiper />
     </div>
   );
 };
