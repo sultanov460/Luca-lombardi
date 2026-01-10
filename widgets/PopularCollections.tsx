@@ -1,15 +1,23 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import { type Swiper as SwiperType } from "swiper";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import { Container } from "@/components/Container";
-import { Navigation } from "swiper/modules";
+import { useState } from "react";
 
-const products = Array.from({ length: 6 });
 
-export default function ProductSwiper() {
+export default function PopularCollections() {
+  const [swiper, setSwiper] = useState<SwiperType | null>(null)
+
+  const swiperBreakpoints = {
+    300: { slidesPerView: 1 },
+    600: { slidesPerView: 2 },
+    1024: { slidesPerView: 3 },
+    1340: { slidesPerView: 5 },
+  }
   return (
     <div className="py-30 bg-slate-800 text-white relative">
       <Container className="flex flex-col items-center text-center gap-20 w-full">
@@ -19,24 +27,14 @@ export default function ProductSwiper() {
         </div>
         <div className="relative w-full px-6">
           <Swiper
-            modules={[Navigation]}
-            navigation={{
-              nextEl: ".swiper-button-next-custom",
-              prevEl: ".swiper-button-prev-custom",
-            }}
+            onSwiper={setSwiper}
             spaceBetween={32}
-            slidesPerView={1.2}
-            centeredSlides
-            breakpoints={{
-              640: {
-                slidesPerView: 2.2,
-              },
-              1024: {
-                slidesPerView: 4,
-              },
-            }}
+            slidesPerView={1}
+            className="w-full"
+            loop
+            breakpoints={swiperBreakpoints}
           >
-            {products.map((_, i) => (
+            {[...Array(10)].map((_, i) => (
               <SwiperSlide key={i}>
                 <div className="bg-white rounded-2xl p-4 shadow-lg">
                   <img
@@ -47,7 +45,7 @@ export default function ProductSwiper() {
 
                   <div className="mt-4 flex justify-between items-center">
                     <p className="text-sm font-medium">
-                      Men's Olive Green Suit
+                      Men&apos;s Olive Green Suit
                     </p>
                     <span className="text-sm font-semibold">$378</span>
                   </div>
@@ -56,11 +54,11 @@ export default function ProductSwiper() {
             ))}
           </Swiper>
 
-          <button className="swiper-button-prev-custom absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center">
+          <button onClick={() => swiper?.slidePrev()} className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 cursor-pointer rounded-full bg-black text-white flex items-center justify-center">
             ←
           </button>
 
-          <button className="swiper-button-next-custom absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center">
+          <button onClick={() => swiper?.slideNext()} className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 cursor-pointer rounded-full bg-black text-white flex items-center justify-center">
             →
           </button>
         </div>
