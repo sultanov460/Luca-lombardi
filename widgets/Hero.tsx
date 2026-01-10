@@ -1,5 +1,5 @@
 import { Container } from "@/components/Container";
-import { HeroCards } from "./HeroCards";
+
 
 export const Hero = () => {
   return (
@@ -16,7 +16,7 @@ export const Hero = () => {
           Shop Now
         </button>
       </Container>
-      <HeroCards />
+
     </div>
   );
 };

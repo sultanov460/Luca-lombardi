@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export const HeroCards = () => {
+export const Collections = () => {
   const cards = [
     {
       id: 1,
