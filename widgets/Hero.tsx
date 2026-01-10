@@ -1,4 +1,5 @@
 import { Container } from "@/components/Container";
+import ProductSwiper from "./ProductSwiper";
 
 export const Hero = () => {
   return (
@@ -15,6 +16,7 @@ export const Hero = () => {
           Shop Now
         </button>
       </Container>
+      <ProductSwiper />
     </div>
   );
 };
