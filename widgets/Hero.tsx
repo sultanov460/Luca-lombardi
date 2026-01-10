@@ -1,4 +1,5 @@
 import { Container } from "@/components/Container";
+import ProductSwiper from "./ProductSwiper";
 
 
 export const Hero = () => {
