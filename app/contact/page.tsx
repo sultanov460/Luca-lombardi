@@ -69,8 +69,12 @@ export default function Contact() {
       </div>
       <div className="pt-15 pb-30">
         <Container>
-          <form onSubmit={handleSubmit}>
-            <div>
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-2 gap-8 shadow-2xl rounded-3xl p-8 w-max mx-auto
+          "
+          >
+            <div className="flex flex-col relative">
               <input
                 type="text"
                 className="bg-[#f2f2f2] py-3 px-2 rounded-xl outline-none"
@@ -84,28 +88,35 @@ export default function Contact() {
               <PhoneInput
                 onlyCountries={["az"]}
                 country={"az"}
+                specialLabel=""
                 placeholder="Enter your phone number..."
                 value={formData.phone}
                 onChange={(value) => setFormData({ ...formData, phone: value })}
+                className="bg-[#f2f2f2] py-3 px-2 rounded-xl outline-none"
               />
             </div>
-            <div>
+            <div className="flex flex-col relative col-span-2">
               <input
                 type="email"
+                className="bg-[#f2f2f2] py-3 px-2 rounded-xl outline-none"
                 placeholder="Enter your email..."
                 value={formData.email}
                 onChange={handleChange}
                 name="email"
               />
             </div>
-            <div>
+            <div className="flex flex-col gap-1 col-span-2">
               <textarea
                 value={formData.message}
+                className="bg-[#f2f2f2] py-3 px-2 rounded-xl h-40 outline-none resize-none"
                 onChange={handleChange}
+                placeholder="Enter your message..."
                 name="message"
               ></textarea>
             </div>
-            <button>Send</button>
+            <button className="bg-black text-white font-medium tracking-[2px] py-3 rounded-3xl cursor-pointer">
+              Send
+            </button>
           </form>
         </Container>
       </div>
