@@ -77,12 +77,15 @@ export default function Contact() {
             <div className="flex flex-col relative">
               <input
                 type="text"
-                className="bg-[#f2f2f2] py-3 px-2 rounded-xl outline-none"
+                className="bg-[#f2f2f2] py-3 px-2 rounded-xl outline-none w-64.5"
                 placeholder="Enter your name..."
                 value={formData.name}
                 onChange={handleChange}
                 name="name"
               />
+              {errors.name && (
+                <span className="text-red-500 text-sm">{errors.name}</span>
+              )}
             </div>
             <div>
               <PhoneInput
@@ -92,7 +95,7 @@ export default function Contact() {
                 placeholder="Enter your phone number..."
                 value={formData.phone}
                 onChange={(value) => setFormData({ ...formData, phone: value })}
-                className="bg-[#f2f2f2] py-3 px-2 rounded-xl outline-none"
+                className="bg-[#f2f2f2] py-3 px-2 rounded-xl outline-none w-64.5"
               />
             </div>
             <div className="flex flex-col relative col-span-2">
@@ -104,6 +107,9 @@ export default function Contact() {
                 onChange={handleChange}
                 name="email"
               />
+              {errors.email && (
+                <span className="text-red-500 text-sm">{errors.email}</span>
+              )}
             </div>
             <div className="flex flex-col gap-1 col-span-2">
               <textarea
@@ -113,6 +119,9 @@ export default function Contact() {
                 placeholder="Enter your message..."
                 name="message"
               ></textarea>
+              {errors.message && (
+                <span className="text-red-500 text-sm">{errors.message}</span>
+              )}
             </div>
             <button className="bg-black text-white font-medium tracking-[2px] py-3 rounded-3xl cursor-pointer">
               Send
