@@ -1,5 +1,6 @@
 import Banner from "@/widgets/Banner";
-import { Catalog } from "./widgets/Catalog";
+import { Catalog } from "@/widgets/Catalog";
+import { womenCatalog } from "@/data/catalog";
 
 export default function WomenCollection() {
   return (
@@ -9,7 +10,7 @@ export default function WomenCollection() {
         description="Discover curated pieces that embody heritage, craftsmanship, and quiet sophistication."
         bgClass="bg-women"
       />
-      <Catalog />
+      <Catalog catalogData={womenCatalog} />
     </>
   );
 }
