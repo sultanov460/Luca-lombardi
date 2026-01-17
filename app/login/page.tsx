@@ -64,7 +64,7 @@ export default function Login() {
               Login
             </button>
             <span className="text-sm mx-auto">
-              Don't have an account{" "}
+              Don&apos;t have an account{" "}
               <Link
                 href={"/signup"}
                 className="text-sky-500 xl:hover:underline ml-1"
