@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 .bg-hero {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     url("https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg");
 
   background-position: center;
@@ -9,18 +10,16 @@
   height: 60vh;
 }
 
-.bg-women {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/women-collection.png");
-  background-position: center;
-  background-size: cover;
-  height: 60vh;
+.form-control {
+  @apply !bg-[#f2f2f2] !py-3 !px-2 !rounded-xl !border-none !pl-12 !h-12 !w-max;
 }
 
-.bg-men {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/men-collection.png");
-  background-position: center;
-  background-size: cover;
-  height: 60vh;
+.flag-dropdown {
+  @apply !bg-transparent !border-none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1; /* force visible */
+  display: block; /* ensure it is displayed */
 }
