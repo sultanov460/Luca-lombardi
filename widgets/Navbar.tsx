@@ -34,10 +34,13 @@ export const Navbar = () => {
               <IoMdSearch size={26} />{" "}
               <span className="hidden md:block">Search</span>
             </button>
-            <button className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer">
+            <Link
+              href={"/login"}
+              className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer"
+            >
               <LuUser size={25} />{" "}
               <span className="hidden md:block">Login</span>
-            </button>
+            </Link>
             <button
               onClick={toggleNav}
               className="z-50 flex items-center gap-2 text-sm hover:opacity-70 transition cursor-pointer md:hidden"
