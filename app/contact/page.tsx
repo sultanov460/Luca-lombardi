@@ -1,6 +1,7 @@
 "use client";
 import { Container } from "@/components/Container";
 import { ContactFormData, contactSchema } from "@/schemas/contact";
+import axios from "axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -26,6 +27,10 @@ export default function Contact() {
     message: null,
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
@@ -36,7 +41,7 @@ export default function Contact() {
 
 
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const result = contactSchema.safeParse(formData);
@@ -56,7 +61,32 @@ export default function Contact() {
     }
 
     const validatedData = result.data;
-    console.log(validatedData);
+
+    setIsLoading(true)
+    setErrorMessage(null)
+
+    try {
+      await axios.post('/api/contact', validatedData)
+
+      setSuccessMessage('Your message has been sent successfully!')
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        message: "",
+      })
+
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 3000)
+    } catch (error) {
+      console.log(error)
+      setErrorMessage('Something went wrong. Please try again later.')
+    } finally {
+      setIsLoading(false)
+    }
+
+
   }
   return (
     <div>
@@ -124,8 +154,18 @@ export default function Contact() {
                 <span className="text-red-500 text-sm">{errors.message}</span>
               )}
             </div>
+            {successMessage && (
+              <p className="text-green-500 col-span-2 text-center">
+                {successMessage}
+              </p>
+            )}
+            {errorMessage && (
+              <p className="text-red-500 col-span-2 text-center">
+                {errorMessage}
+              </p>
+            )}
             <button className="bg-black text-white font-medium tracking-[2px] py-3 rounded-3xl cursor-pointer">
-              Send
+              {isLoading ? "Sending..." : "Send"}
             </button>
           </form>
         </Container>
