@@ -3,6 +3,7 @@ import { Container } from "@/components/Container";
 import { ContactFormData, contactSchema } from "@/schemas/contact";
 import { ChangeEvent, FormEvent, useState } from "react";
 import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import z from "zod";
 
 interface ErrorsState {
@@ -33,7 +34,7 @@ export default function Contact() {
     setErrors({ ...errors, [e.target.name]: null });
   }
 
-  console.log(errors);
+
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -71,13 +72,13 @@ export default function Contact() {
         <Container>
           <form
             onSubmit={handleSubmit}
-            className="grid grid-cols-2 gap-8 shadow-2xl rounded-3xl p-8 w-max mx-auto
+            className="grid grid-cols-2 gap-8 shadow-2xl rounded-3xl p-8 w-full lg:w-140 mx-auto
           "
           >
-            <div className="flex flex-col relative">
+            <div className="flex flex-col relative col-span-2 lg:col-span-1">
               <input
                 type="text"
-                className="bg-[#f2f2f2] py-3 px-2 rounded-xl outline-none w-64.5"
+                className="bg-[#f2f2f2] py-3 px-2 rounded-xl outline-none"
                 placeholder="Enter your name..."
                 value={formData.name}
                 onChange={handleChange}
@@ -87,17 +88,17 @@ export default function Contact() {
                 <span className="text-red-500 text-sm">{errors.name}</span>
               )}
             </div>
-            <div>
-              <PhoneInput
-                onlyCountries={["az"]}
-                country={"az"}
-                specialLabel=""
-                placeholder="Enter your phone number..."
-                value={formData.phone}
-                onChange={(value) => setFormData({ ...formData, phone: value })}
-                className="bg-[#f2f2f2] py-3 px-2 rounded-xl outline-none w-64.5"
-              />
-            </div>
+
+            <PhoneInput
+              onlyCountries={["az"]}
+              country={"az"}
+              value={formData.phone}
+              onChange={(value) =>
+                setFormData({ ...formData, phone: `+${value}` })
+              }
+              placeholder="Enter your phone number..."
+            />
+
             <div className="flex flex-col relative col-span-2">
               <input
                 type="email"
