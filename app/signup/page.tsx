@@ -1,8 +1,15 @@
 "use client";
 import { Container } from "@/components/Container";
+import { signSchema } from "@/schemas/sign";
 import { LoginFormData } from "@/types/login";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
+import z from "zod";
+
+interface ErrorsState {
+  email: string | null;
+  password: string | null;
+}
 
 export default function Signup() {
   const [formData, setFormData] = useState<LoginFormData>({
@@ -10,15 +17,49 @@ export default function Signup() {
     password: "",
   });
 
+  const [errors, setErrors] = useState<ErrorsState>({
+    email: null,
+    password: null,
+  });
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [show, setShow] = useState(true);
+
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: null });
   }
 
-  const [show, setShow] = useState(true);
+  function handleLogin(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const result = signSchema.safeParse(formData);
+
+    if (!result.success) {
+      const flattened = z.flattenError(result.error);
+
+      const fieldErrors = flattened.fieldErrors;
+
+      setErrors({
+        email: fieldErrors.email?.[0] || null,
+        password: fieldErrors.password?.[0] || null,
+      });
+
+      return;
+    }
+
+    const validatedData = result.data;
+
+    setErrorMessage(null);
+  }
+
   return (
     <div className="pt-20 pb-30">
       <Container>
-        <form className="gird grid-cols-1 gap-5 shadow-2xl rounded-3xl p-8 w-full sm:w-150 mx-auto">
+        <form
+          onSubmit={handleLogin}
+          className="gird grid-cols-1 gap-5 shadow-2xl rounded-3xl p-8 w-full sm:w-150 mx-auto"
+        >
           <h1 className="text-4xl tracking-[2px] text-center mb-5">Sign Up</h1>
           <div className="flex flex-col gap-5">
             <div className="flex flex-col relative">
@@ -30,6 +71,9 @@ export default function Signup() {
                 value={formData.email}
                 name="email"
               />
+              {errors.email && (
+                <span className="text-red-500 text-sm">{errors.email}</span>
+              )}
             </div>
             <div className="flex flex-col relative">
               <input
@@ -39,6 +83,9 @@ export default function Signup() {
                 onChange={handleChange}
                 name="password"
               />
+              {errors.password && (
+                <span className="text-red-500 text-sm">{errors.password}</span>
+              )}
               <button
                 className="absolute top-3 right-5 cursor-pointer"
                 onClick={() => setShow(!show)}
