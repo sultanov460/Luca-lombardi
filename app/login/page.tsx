@@ -11,6 +11,7 @@ import z from "zod";
 import { firebaseAuth } from "@/lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { FirebaseError } from "firebase/app";
 
 interface ErrorsState {
   email: string | null;
@@ -37,7 +38,6 @@ export default function Login() {
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: null });
-    setErrorMessage(null);
   }
 
   async function handleLogin(e: FormEvent<HTMLFormElement>) {
@@ -65,12 +65,14 @@ export default function Login() {
       );
 
       router.push("/");
-    } catch (err: any) {
-      const code = String(err?.code || "");
-      if (code === "auth/invalid-credential") {
-        setErrorMessage("Неверный email или пароль.");
-      } else {
-        setErrorMessage("Ошибка входа. Попробуй ещё раз.");
+    } catch (err) {
+      if (err instanceof FirebaseError) {
+        const code = String(err?.code || "");
+        if (code === "auth/invalid-credential") {
+          setErrorMessage("Неверный email или пароль.");
+        } else {
+          setErrorMessage("Ошибка входа. Попробуй ещё раз.");
+        }
       }
     } finally {
       setIsSubmitting(false);
