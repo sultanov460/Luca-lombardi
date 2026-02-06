@@ -1,8 +1,8 @@
 "use client";
 
-import { useAuthUser } from "@/hooks/useAuthUser";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/store/hooks";
 
 export function ProtectedRoute({
   children,
@@ -11,17 +11,17 @@ export function ProtectedRoute({
   children: React.ReactNode;
   redirectTo?: string;
 }) {
-  const { isAuthed, loading } = useAuthUser();
   const router = useRouter();
+  const { user, loading } = useAppSelector((s) => s.auth);
 
   useEffect(() => {
-    if (!loading && !isAuthed) {
+    if (!loading && !user) {
       router.replace(redirectTo);
     }
-  }, [loading, isAuthed, redirectTo, router]);
+  }, [loading, user, redirectTo, router]);
 
-  if (loading) return null; // можно заменить на "Loading..."
-  if (!isAuthed) return null; // пока редиректим
+  if (loading) return null;
+  if (!user) return null;
 
   return <>{children}</>;
 }

@@ -2,7 +2,7 @@
 
 import { Container } from "@/components/Container";
 import { signSchema } from "@/schemas/sign";
-import { LoginFormData } from "@/types/login";
+import type { LoginFormData } from "@/types/login";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
@@ -45,7 +45,6 @@ export default function Login() {
     setErrorMessage(null);
 
     const result = signSchema.safeParse(formData);
-
     if (!result.success) {
       const flattened = z.flattenError(result.error);
       const fieldErrors = flattened.fieldErrors;
@@ -83,12 +82,12 @@ export default function Login() {
       <Container>
         <form
           onSubmit={handleLogin}
-          className="gird grid-cols-1 gap-5 shadow-2xl rounded-3xl p-8 w-full sm:w-150 mx-auto"
+          className="grid grid-cols-1 gap-5 shadow-2xl rounded-3xl p-8 w-full sm:w-150 mx-auto"
         >
-          <h1 className="text-4xl tracking-[2px] text-center mb-5">Sign In</h1>
+          <h1 className="text-4xl tracking-[2px] text-center mb-1">Sign In</h1>
 
           {errorMessage && (
-            <div className="rounded-xl bg-red-50 border border-red-200 p-3 text-sm text-red-700 mb-2">
+            <div className="rounded-xl bg-red-50 border border-red-200 p-3 text-sm text-red-700">
               {errorMessage}
             </div>
           )}
@@ -102,9 +101,12 @@ export default function Login() {
                 onChange={handleChange}
                 value={formData.email}
                 name="email"
+                autoComplete="email"
               />
               {errors.email && (
-                <span className="text-red-500 text-sm">{errors.email}</span>
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.email}
+                </span>
               )}
             </div>
 
@@ -116,14 +118,18 @@ export default function Login() {
                 onChange={handleChange}
                 name="password"
                 value={formData.password}
+                autoComplete="current-password"
               />
               {errors.password && (
-                <span className="text-red-500 text-sm">{errors.password}</span>
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.password}
+                </span>
               )}
+
               <button
                 type="button"
                 className="absolute top-3 right-5 cursor-pointer"
-                onClick={() => setShow(!show)}
+                onClick={() => setShow((s) => !s)}
               >
                 {show ? <IoEye size={20} /> : <IoEyeOff size={20} />}
               </button>
@@ -132,7 +138,7 @@ export default function Login() {
             <div className="flex items-center justify-between">
               <Link
                 href={"/forgot-password"}
-                className="text-sky-500 xl:hover:underline"
+                className="text-sky-500 xl:hover:underline text-sm"
               >
                 Forgot password?
               </Link>
@@ -140,7 +146,7 @@ export default function Login() {
 
             <button
               disabled={isSubmitting}
-              className="bg-black text-white font-medium tracking-[2px] py-3 rounded-3xl cursor-pointer disabled:opacity-60"
+              className="bg-black text-white font-medium tracking-[2px] py-3 rounded-3xl cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Signing in..." : "Login"}
             </button>

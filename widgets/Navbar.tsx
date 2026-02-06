@@ -10,14 +10,15 @@ import { GrClose } from "react-icons/gr";
 import { FiLogOut, FiShoppingCart } from "react-icons/fi";
 import { Menu } from "./Menu";
 
-import { useAuthUser } from "@/hooks/useAuthUser";
+import { useAppSelector } from "@/store/hooks";
 import { firebaseAuth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
   const [isNavActive, setIsNavActive] = useState(false);
-  const { isAuthed, loading } = useAuthUser();
   const router = useRouter();
+
+  const { user, loading } = useAppSelector((s) => s.auth);
 
   const navLinks = [
     { id: 1, title: "Women", href: "/women-collection" },
@@ -31,7 +32,7 @@ export const Navbar = () => {
   }
 
   async function handleLogout() {
-    await firebaseAuth.signOut();
+    await firebaseAuth.signOut(); // Firebase сам скажет listener-у → Redux станет user=null
     router.push("/login");
   }
 
@@ -44,12 +45,15 @@ export const Navbar = () => {
           </Link>
 
           <div className="flex gap-6 md:gap-12 items-center">
-            <button className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer">
+            <button
+              type="button"
+              className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer"
+            >
               <IoMdSearch size={26} />
               <span className="hidden md:block">Search</span>
             </button>
 
-            {!loading && !isAuthed && (
+            {!loading && !user && (
               <Link
                 href={"/login"}
                 className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer"
@@ -59,7 +63,7 @@ export const Navbar = () => {
               </Link>
             )}
 
-            {!loading && isAuthed && (
+            {!loading && user && (
               <div className="flex items-center gap-6">
                 <Link
                   href={"/cart"}
@@ -71,10 +75,10 @@ export const Navbar = () => {
                 </Link>
 
                 <button
+                  type="button"
                   onClick={handleLogout}
                   className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer"
                   title="Logout"
-                  type="button"
                 >
                   <FiLogOut size={24} />
                   <span className="hidden md:block">Logout</span>
