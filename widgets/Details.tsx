@@ -1,31 +1,16 @@
-import Link from "next/link";
+import { BreadCrumb } from "./BreadCrumb";
+import { Product } from "@/types/product";
 
-interface Product {
-  id: number;
-  title: string;
-  src: string;
-  price: string;
-  collection: string;
+
+interface DetailsProps {
+  product: Product
 }
 
-export default function Details({ product }: { product: Product }) {
+export default function Details({ product }: DetailsProps) {
   return (
     <main className="min-h-screen bg-white">
       <div className="relative mx-auto w-full max-w-6xl px-5 sm:px-8 pt-10 pb-18">
-        <div className="text-sm text-zinc-500">
-          <Link href={"/"} className="hover:text-zinc-900 cursor-pointer">
-            Home
-          </Link>
-          <span className="mx-2 text-zinc-300">/</span>
-          <Link
-            href={`/${product.collection}`}
-            className="hover:text-zinc-900 cursor-pointer"
-          >
-            {product.collection}
-          </Link>
-          <span className="mx-2 text-zinc-300">/</span>
-          <span className="text-zinc-900 font-medium">{product.title}</span>
-        </div>
+        <BreadCrumb product={product} />
 
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-12">
           <section className="w-full">
