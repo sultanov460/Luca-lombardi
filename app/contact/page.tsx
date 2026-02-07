@@ -32,14 +32,12 @@ export default function Contact() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   function handleChange(
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
     setErrors({ ...errors, [e.target.name]: null });
   }
-
-
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -62,31 +60,29 @@ export default function Contact() {
 
     const validatedData = result.data;
 
-    setIsLoading(true)
-    setErrorMessage(null)
+    setIsLoading(true);
+    setErrorMessage(null);
 
     try {
-      await axios.post('/api/contact', validatedData)
+      await axios.post("/api/contact", validatedData);
 
-      setSuccessMessage('Your message has been sent successfully!')
+      setSuccessMessage("Your message has been sent successfully!");
       setFormData({
         name: "",
         phone: "",
         email: "",
         message: "",
-      })
+      });
 
       setTimeout(() => {
-        setSuccessMessage(null)
-      }, 3000)
+        setSuccessMessage(null);
+      }, 3000);
     } catch (error) {
-      console.log(error)
-      setErrorMessage('Something went wrong. Please try again later.')
+      console.log(error);
+      setErrorMessage("Something went wrong. Please try again later.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-
-
   }
   return (
     <div>
@@ -118,16 +114,17 @@ export default function Contact() {
                 <span className="text-red-500 text-sm">{errors.name}</span>
               )}
             </div>
-
-            <PhoneInput
-              onlyCountries={["az"]}
-              country={"az"}
-              value={formData.phone}
-              onChange={(value) =>
-                setFormData({ ...formData, phone: `+${value}` })
-              }
-              placeholder="Enter your phone number..."
-            />
+            <div className="col-span-2 lg:col-span-1 bg-[#f2f2f2] rounded-xl px-2">
+              <PhoneInput
+                onlyCountries={["az"]}
+                country={"az"}
+                value={formData.phone}
+                onChange={(value) =>
+                  setFormData({ ...formData, phone: `+${value}` })
+                }
+                placeholder="Enter your phone number..."
+              />
+            </div>
 
             <div className="flex flex-col relative col-span-2">
               <input
