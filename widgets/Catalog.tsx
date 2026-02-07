@@ -1,19 +1,9 @@
 "use client";
 
 import { Container } from "@/components/Container";
+import { CatalogProps } from "@/types/catalogData";
 import Link from "next/link";
 import { useState } from "react";
-
-interface CatalogProps {
-  catalogData: {
-    id: number;
-    title: string;
-    src: string;
-    price: string;
-    collection: string;
-    isNew: boolean;
-  }[];
-}
 
 export const Catalog = ({ catalogData }: CatalogProps) => {
   const [showMore, setShowMore] = useState(4);
@@ -23,7 +13,6 @@ export const Catalog = ({ catalogData }: CatalogProps) => {
         {catalogData.slice(0, showMore).map((card) => (
           <Link
             key={card.id}
-            href={""}
             href={`/${card.collection}/${card.id}`}
             className="flex flex-col items-center justify-center text-center max-w-85 mx-auto"
           >

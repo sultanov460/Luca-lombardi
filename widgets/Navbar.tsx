@@ -23,7 +23,7 @@ export const Navbar = () => {
   const navLinks = [
     { id: 1, title: "Women", href: "/women-collection" },
     { id: 2, title: "Men", href: "/men-collection" },
-    { id: 3, title: "New Collection", href: "/new-arrivals" },
+    { id: 3, title: "New Collection", href: "/new-collection" },
     { id: 4, title: "Sunglasses", href: "/sunglasses" },
   ];
 
