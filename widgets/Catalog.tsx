@@ -10,7 +10,11 @@ interface CatalogProps {
     title: string;
     src: string;
     price: string;
+
     isNew: boolean;
+
+    collection: string;
+
   }[];
 }
 
@@ -22,7 +26,11 @@ export const Catalog = ({ catalogData }: CatalogProps) => {
         {catalogData.slice(0, showMore).map((card) => (
           <Link
             key={card.id}
+
             href={""}
+
+            href={`/${card.collection}/${card.id}`}
+
             className="flex flex-col items-center justify-center text-center max-w-85 mx-auto"
           >
             <img
@@ -30,6 +38,10 @@ export const Catalog = ({ catalogData }: CatalogProps) => {
               alt={card.title}
               className="h-auto xl:h-100 object-cover rounded-xl w-full shadow-2xl"
             />
+
+
+
+
             <div className="flex items-center justify-between mt-4 w-full px-2">
               <h2>{card.title}</h2>
               <span className="text-sm">{card.price}</span>
