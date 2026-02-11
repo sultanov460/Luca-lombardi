@@ -28,6 +28,15 @@
   height: 60vh;
 }
 
+.bg-sunglasses {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("/sunglasses-collection.png");
+  background-position: center;
+  background-size: cover;
+  height: 60vh;
+}
+
 .form-control {
   @apply !bg-[#f2f2f2] !py-3 !px-2 !rounded-xl !border-none !pl-12 !h-12 !w-max;
 }

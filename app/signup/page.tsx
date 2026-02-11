@@ -6,7 +6,6 @@ import type { LoginFormData } from "@/types/login";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import z from "zod";
-
 import { firebaseAuth } from "@/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
