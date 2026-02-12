@@ -14,13 +14,12 @@ export const useAuth = () => {
   const handleLogin = async (provider: Provider): Promise<User> => {
     const { user } = await signInWithPopup(firebaseAuth, providers[provider]);
 
-    // Optional token (can be used for server-side verification later)
     const firebaseToken = await user.getIdToken();
 
     if (firebaseToken) {
       setCookie("authToken", firebaseToken, {
         path: "/",
-        maxAge: 60 * 60, // 1 hour
+        maxAge: 60 * 60 * 24 * 7, // 7 days
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
       });
@@ -29,7 +28,7 @@ export const useAuth = () => {
     return user;
   };
 
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     const currentUser = firebaseAuth.currentUser;
 
     if (!currentUser) {
