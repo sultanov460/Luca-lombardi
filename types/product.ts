@@ -4,4 +4,5 @@ export interface Product {
   src: string;
   price: string;
   collection: string;
+  quantity: number;
 }

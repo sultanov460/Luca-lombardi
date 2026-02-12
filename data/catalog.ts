@@ -2,7 +2,7 @@ export const womenCatalog = [
   {
     id: 1,
     title: "Quiet Luxury",
-    src: "women.jpeg",
+    src: "/women.jpeg",
     price: "557$",
     isNew: true,
     collection: "women-collection",
@@ -10,7 +10,7 @@ export const womenCatalog = [
   {
     id: 2,
     title: "Quiet Luxury",
-    src: "women.jpeg",
+    src: "/women.jpeg",
     price: "557$",
     isNew: true,
     collection: "women-collection",
@@ -18,7 +18,7 @@ export const womenCatalog = [
   {
     id: 3,
     title: "Quiet Luxury",
-    src: "women.jpeg",
+    src: "/women.jpeg",
     price: "557$",
     isNew: true,
     collection: "women-collection",
@@ -26,7 +26,7 @@ export const womenCatalog = [
   {
     id: 4,
     title: "Quiet Luxury",
-    src: "women.jpeg",
+    src: "/women.jpeg",
     price: "557$",
     isNew: true,
     collection: "women-collection",
@@ -34,7 +34,7 @@ export const womenCatalog = [
   {
     id: 5,
     title: "Quiet Luxury",
-    src: "women.jpeg",
+    src: "/women.jpeg",
     price: "557$",
     isNew: true,
     collection: "women-collection",
@@ -42,7 +42,7 @@ export const womenCatalog = [
   {
     id: 6,
     title: "Quiet Luxury",
-    src: "women.jpeg",
+    src: "/women.jpeg",
     price: "557$",
     isNew: true,
     collection: "women-collection",
@@ -50,7 +50,7 @@ export const womenCatalog = [
   {
     id: 7,
     title: "Quiet Luxury",
-    src: "women.jpeg",
+    src: "/women.jpeg",
     price: "557$",
     isNew: true,
     collection: "women-collection",
@@ -58,7 +58,7 @@ export const womenCatalog = [
   {
     id: 8,
     title: "Quiet Luxury",
-    src: "women.jpeg",
+    src: "/women.jpeg",
     price: "557$",
     isNew: true,
     collection: "women-collection",
@@ -66,7 +66,7 @@ export const womenCatalog = [
   {
     id: 9,
     title: "Quiet Luxury",
-    src: "women.jpeg",
+    src: "/women.jpeg",
     price: "557$",
     isNew: true,
     collection: "women-collection",
@@ -74,7 +74,7 @@ export const womenCatalog = [
   {
     id: 10,
     title: "Quiet Luxury",
-    src: "women.jpeg",
+    src: "/women.jpeg",
     price: "557$",
     isNew: true,
     collection: "women-collection",
@@ -85,7 +85,7 @@ export const menCatalog = [
   {
     id: 1,
     title: "Modern Smart Casual",
-    src: "men.jpeg",
+    src: "/men.jpeg",
     price: "557$",
     isNew: true,
     collection: "men-collection",
@@ -93,7 +93,7 @@ export const menCatalog = [
   {
     id: 2,
     title: "Modern Smart Casual",
-    src: "men.jpeg",
+    src: "/men.jpeg",
     price: "557$",
     isNew: true,
     collection: "men-collection",
@@ -101,7 +101,7 @@ export const menCatalog = [
   {
     id: 3,
     title: "Modern Smart Casual",
-    src: "men.jpeg",
+    src: "/men.jpeg",
     price: "557$",
     isNew: true,
     collection: "men-collection",
@@ -109,7 +109,7 @@ export const menCatalog = [
   {
     id: 4,
     title: "Modern Smart Casual",
-    src: "men.jpeg",
+    src: "/men.jpeg",
     price: "557$",
     isNew: true,
     collection: "men-collection",
@@ -117,7 +117,7 @@ export const menCatalog = [
   {
     id: 5,
     title: "Modern Smart Casual",
-    src: "men.jpeg",
+    src: "/men.jpeg",
     price: "557$",
     isNew: true,
     collection: "men-collection",
@@ -125,7 +125,7 @@ export const menCatalog = [
   {
     id: 6,
     title: "Modern Smart Casual",
-    src: "men.jpeg",
+    src: "/men.jpeg",
     price: "557$",
     isNew: true,
     collection: "men-collection",
@@ -133,7 +133,7 @@ export const menCatalog = [
   {
     id: 7,
     title: "Modern Smart Casual",
-    src: "men.jpeg",
+    src: "/men.jpeg",
     price: "557$",
     isNew: true,
     collection: "men-collection",
@@ -141,7 +141,7 @@ export const menCatalog = [
   {
     id: 8,
     title: "Modern Smart Casual",
-    src: "men.jpeg",
+    src: "/men.jpeg",
     price: "557$",
     isNew: true,
     collection: "men-collection",
@@ -149,7 +149,7 @@ export const menCatalog = [
   {
     id: 9,
     title: "Modern Smart Casual",
-    src: "men.jpeg",
+    src: "/men.jpeg",
     price: "557$",
     isNew: true,
     collection: "men-collection",
@@ -157,7 +157,7 @@ export const menCatalog = [
   {
     id: 10,
     title: "Modern Smart Casual",
-    src: "men.jpeg",
+    src: "//men.jpeg",
     price: "557$",
     isNew: true,
     collection: "men-collection",
@@ -246,3 +246,5 @@ export const sunglassesCatalog = [
     collection: "men-collection",
   },
 ];
+
+export const products = [...womenCatalog, ...menCatalog, ...sunglassesCatalog];

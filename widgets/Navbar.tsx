@@ -2,7 +2,7 @@
 
 import { Container } from "@/components/Container";
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { IoMdSearch } from "react-icons/io";
 import { LuUser } from "react-icons/lu";
@@ -10,16 +10,26 @@ import { GrClose } from "react-icons/gr";
 import { FiLogOut, FiShoppingCart } from "react-icons/fi";
 import { Menu } from "./Menu";
 
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { firebaseAuth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
+import { setSearchQuery } from "@/store/slices/searchSlice";
 
 export const Navbar = () => {
   const [isNavActive, setIsNavActive] = useState(false);
   const router = useRouter();
 
   const { user, loading } = useAppSelector((s) => s.auth);
+  const { query } = useAppSelector(s => s.search)
+
+
+  const dispatch = useAppDispatch()
+
+  function handleSearch(e: FormEvent) {
+    e.preventDefault()
+    router.push('/search')
+  }
 
   const navLinks = [
     { id: 1, title: "Women", href: "/women-collection" },
@@ -51,7 +61,10 @@ export const Navbar = () => {
               className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer"
             >
               <IoMdSearch size={26} />
-              <span className="hidden md:block">Search</span>
+              <form onSubmit={handleSearch}>
+                <input className="border" type="text" value={query} onChange={(e) => dispatch(setSearchQuery(e.target.value))} />
+                <button className="hidden md:block">Search</button>
+              </form>
             </button>
 
             {!loading && !user && (

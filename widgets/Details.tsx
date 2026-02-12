@@ -1,5 +1,8 @@
+'use client'
+import { useAppDispatch } from "@/store/hooks";
 import { BreadCrumb } from "./BreadCrumb";
 import { Product } from "@/types/product";
+import { addToCart } from "@/store/slices/cartSlice";
 
 
 interface DetailsProps {
@@ -7,6 +10,7 @@ interface DetailsProps {
 }
 
 export default function Details({ product }: DetailsProps) {
+  const dispatch = useAppDispatch()
   return (
     <main className="min-h-screen bg-white">
       <div className="relative mx-auto w-full max-w-6xl px-5 sm:px-8 pt-10 pb-18">
@@ -41,10 +45,10 @@ export default function Details({ product }: DetailsProps) {
                 Premium look, everyday comfort.
               </p>
               <div className="mt-7 flex flex-col gap-3">
-                <button className="h-12 rounded-2xl bg-zinc-900 text-white font-semibold tracking-wide hover:bg-black transition shadow-[0_10px_25px_rgba(0,0,0,0.18)]">
+                <button onClick={() => dispatch(addToCart(product))} className="h-12 rounded-2xl bg-zinc-900 text-white font-semibold tracking-wide hover:bg-black transition shadow-[0_10px_25px_rgba(0,0,0,0.18)] cursor-pointer">
                   Add to cart
                 </button>
-                <button className="h-12 rounded-2xl border border-zinc-200 bg-white text-zinc-900 font-semibold hover:border-zinc-400 transition">
+                <button className="h-12 rounded-2xl border border-zinc-200 bg-white text-zinc-900 font-semibold hover:border-zinc-400 transition cursor-pointer">
                   Save for later
                 </button>
               </div>

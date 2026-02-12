@@ -4,29 +4,16 @@ import { Container } from "@/components/Container";
 import { CatalogProps } from "@/types/catalogData";
 import Link from "next/link";
 import { useState } from "react";
+import { ProductCard } from "./ProductCard";
+import { Product } from "@/types/product";
 
-export const Catalog = ({ catalogData }: CatalogProps) => {
+export const Catalog = ({ catalogData }: { catalogData: any }) => {
   const [showMore, setShowMore] = useState(4);
   return (
     <div className="py-30">
       <Container className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {catalogData.slice(0, showMore).map((card) => (
-          <Link
-            key={card.id}
-            href={`/${card.collection}/${card.id}`}
-            className="flex flex-col items-center justify-center text-center max-w-85 mx-auto"
-          >
-            <img
-              src={card.src}
-              alt={card.title}
-              className="h-auto xl:h-100 object-cover rounded-xl w-full shadow-2xl"
-            />
-
-            <div className="flex items-center justify-between mt-4 w-full px-2">
-              <h2>{card.title}</h2>
-              <span className="text-sm">{card.price}</span>
-            </div>
-          </Link>
+        {catalogData.slice(0, showMore).map((card: Product) => (
+          <ProductCard key={card.id} card={card} />
         ))}
       </Container>
       {catalogData.length > 6 && (
