@@ -13,6 +13,7 @@ import { Menu } from "./Menu";
 import { useAppSelector } from "@/store/hooks";
 import { firebaseAuth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
+import clsx from "clsx";
 
 export const Navbar = () => {
   const [isNavActive, setIsNavActive] = useState(false);
@@ -117,7 +118,22 @@ export const Navbar = () => {
           </Link>
         </Container>
 
-        <Menu isNavActive={isNavActive} navLinks={navLinks} />
+        <div
+          className={clsx(
+            "fixed top-0 right-0 bottom-0 bg-gray-200 w-full z-10 flex flex-col gap-10 justify-center px-5 rounded-e-3xl text-gray-600 transition-all duration-400",
+            isNavActive ? "left-0" : "-left-full",
+          )}
+        >
+          {navLinks.map((link) => (
+            <Link
+              className="text-3xl border-b pb-5"
+              key={link.id}
+              href={link.href}
+            >
+              {link.title}
+            </Link>
+          ))}
+        </div>
       </div>
     </nav>
   );
