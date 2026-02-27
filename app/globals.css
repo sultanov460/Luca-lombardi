@@ -36,11 +36,11 @@
   background-size: cover;
   height: 60vh;
 }
-  
+
 .bg-sunglasses {
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/sunglasses-collection.png");
+    url("/sunglasses/sunglasses-collection.png");
   background-position: center;
   background-size: cover;
   height: 60vh;

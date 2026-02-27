@@ -1,8 +1,6 @@
 "use client";
 
 import { Container } from "@/components/Container";
-import { CatalogProps } from "@/types/catalogData";
-import Link from "next/link";
 import { useState } from "react";
 import { ProductCard } from "./ProductCard";
 import { Product } from "@/types/product";

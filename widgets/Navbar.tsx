@@ -21,21 +21,20 @@ export const Navbar = () => {
   const router = useRouter();
 
   const { user, loading } = useAppSelector((s) => s.auth);
-  const { query } = useAppSelector(s => s.search)
+  const { query } = useAppSelector((s) => s.search);
 
-
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   function handleSearch(e: FormEvent) {
-    e.preventDefault()
-    router.push('/search')
+    e.preventDefault();
+    router.push("/search");
   }
 
   const navLinks = [
     { id: 1, title: "Women", href: "/women-collection" },
     { id: 2, title: "Men", href: "/men-collection" },
-    { id: 3, title: "New Collection", href: "/new-collection" },
-    { id: 4, title: "Sunglasses", href: "/sunglasses" },
+    { id: 3, title: "Sunglasses", href: "/sunglasses-collection" },
+    { id: 4, title: "New Collection", href: "/new-collection" },
   ];
 
   function toggleNav() {
@@ -62,7 +61,12 @@ export const Navbar = () => {
             >
               <IoMdSearch size={26} />
               <form onSubmit={handleSearch}>
-                <input className="border" type="text" value={query} onChange={(e) => dispatch(setSearchQuery(e.target.value))} />
+                <input
+                  className="border"
+                  type="text"
+                  value={query}
+                  onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+                />
                 <button className="hidden md:block">Search</button>
               </form>
             </button>

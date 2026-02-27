@@ -10,4 +10,5 @@ export type CatalogItem = {
 export type CatalogProps = {
   menCollection: CatalogItem[];
   womenCollection: CatalogItem[];
+  sunglassesCollection: CatalogItem[];
 };
