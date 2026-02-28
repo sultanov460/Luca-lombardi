@@ -4,5 +4,8 @@ export interface Product {
   src: string;
   price: string;
   collection: string;
+}
+
+export interface CartItem extends Product {
   quantity: number;
 }

@@ -2,34 +2,23 @@
 
 import { Container } from "@/components/Container";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { BiMenuAltLeft } from "react-icons/bi";
-import { IoMdSearch } from "react-icons/io";
 import { LuUser } from "react-icons/lu";
 import { GrClose } from "react-icons/gr";
 import { FiLogOut, FiShoppingCart } from "react-icons/fi";
-import { Menu } from "./Menu";
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import { firebaseAuth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
-import clsx from "clsx";
-import { setSearchQuery } from "@/store/slices/searchSlice";
+import Search from "./Search";
+import { MobileDrawer } from "./MobileDrawer";
 
 export const Navbar = () => {
   const [isNavActive, setIsNavActive] = useState(false);
   const router = useRouter();
 
   const { user, loading } = useAppSelector((s) => s.auth);
-  const { query } = useAppSelector(s => s.search)
-
-
-  const dispatch = useAppDispatch()
-
-  function handleSearch(e: FormEvent) {
-    e.preventDefault()
-    router.push('/search')
-  }
 
   const navLinks = [
     { id: 1, title: "Women", href: "/women-collection" },
@@ -56,16 +45,7 @@ export const Navbar = () => {
           </Link>
 
           <div className="flex gap-6 md:gap-12 items-center">
-            <button
-              type="button"
-              className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer"
-            >
-              <IoMdSearch size={26} />
-              <form onSubmit={handleSearch}>
-                <input className="border" type="text" value={query} onChange={(e) => dispatch(setSearchQuery(e.target.value))} />
-                <button className="hidden md:block">Search</button>
-              </form>
-            </button>
+            <Search />
 
             {!loading && !user && (
               <Link
@@ -130,22 +110,14 @@ export const Navbar = () => {
             Contact Us!
           </Link>
         </Container>
-
-        <div
-          className={clsx(
-            "fixed top-0 right-0 bottom-0 bg-gray-200 w-full z-10 flex flex-col gap-10 justify-center px-5 rounded-e-3xl text-gray-600 transition-all duration-400",
-            isNavActive ? "left-0" : "-left-full",
-          )}
-        >
-          {navLinks.map((link) => (
-            <Link
-              className="text-3xl border-b pb-5"
-              key={link.id}
-              href={link.href}
-            >
-              {link.title}
-            </Link>
-          ))}
+        <div>
+          <MobileDrawer
+            isOpen={isNavActive}
+            onClose={() => setIsNavActive(false)}
+            navLinks={navLinks}
+            onLogout={handleLogout}
+            isAuthenticated={!!user}
+          />
         </div>
       </div>
     </nav>
