@@ -12,11 +12,16 @@ import { FcGoogle } from "react-icons/fc";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import z from "zod";
 import { firebaseAuth } from "@/lib/firebase";
+import { Metadata } from "next";
 
 interface ErrorsState {
   email: string | null;
   password: string | null;
 }
+
+export const metadata: Metadata = {
+  title: "Signup",
+};
 
 export default function Signup() {
   const router = useRouter();
