@@ -4,14 +4,13 @@ import { Container } from "@/components/Container";
 import { useAuth } from "@/hooks/useAuth";
 import { signSchema } from "@/schemas/sign";
 import type { LoginFormData } from "@/types/login";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import z from "zod";
-import { firebaseAuth } from "@/lib/firebase";
 
 interface ErrorsState {
   email: string | null;
@@ -20,7 +19,7 @@ interface ErrorsState {
 
 export default function Signup() {
   const router = useRouter();
-  const { handleGoogleLogin } = useAuth();
+  const { handleSignup, handleGoogleLogin } = useAuth();
 
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
@@ -43,11 +42,12 @@ export default function Signup() {
     setErrorMessage(null);
   }
 
-  async function handleSignup(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage(null);
 
     const result = signSchema.safeParse(formData);
+
     if (!result.success) {
       const flattened = z.flattenError(result.error);
       const fieldErrors = flattened.fieldErrors;
@@ -60,22 +60,23 @@ export default function Signup() {
     }
 
     setIsSubmitting(true);
-    try {
-      await createUserWithEmailAndPassword(
-        firebaseAuth,
-        result.data.email,
-        result.data.password,
-      );
 
+    try {
+      await handleSignup(result.data.email, result.data.password);
       router.push("/");
-    } catch (err: any) {
-      const code = String(err?.code || "");
-      if (code === "auth/email-already-in-use") {
-        setErrorMessage("Этот email уже зарегистрирован.");
-      } else if (code === "auth/weak-password") {
-        setErrorMessage("Слабый пароль (минимум 6 символов).");
-      } else if (code === "auth/invalid-email") {
-        setErrorMessage("Неверный email.");
+    } catch (err) {
+      if (err instanceof FirebaseError) {
+        const code = String(err.code || "");
+
+        if (code === "auth/email-already-in-use") {
+          setErrorMessage("Этот email уже зарегистрирован.");
+        } else if (code === "auth/weak-password") {
+          setErrorMessage("Слабый пароль (минимум 6 символов).");
+        } else if (code === "auth/invalid-email") {
+          setErrorMessage("Неверный email.");
+        } else {
+          setErrorMessage("Ошибка регистрации. Попробуй ещё раз.");
+        }
       } else {
         setErrorMessage("Ошибка регистрации. Попробуй ещё раз.");
       }
@@ -87,6 +88,7 @@ export default function Signup() {
   async function handleGoogleClick() {
     setErrorMessage(null);
     setIsGoogleSubmitting(true);
+
     try {
       await handleGoogleLogin();
       router.push("/");
@@ -131,7 +133,7 @@ export default function Signup() {
               <div className="h-px flex-1 bg-neutral-200" />
             </div>
 
-            <form onSubmit={handleSignup} className="grid grid-cols-1 gap-5">
+            <form onSubmit={onSubmit} className="grid grid-cols-1 gap-5">
               <div className="flex flex-col relative">
                 <input
                   type="email"
@@ -184,7 +186,7 @@ export default function Signup() {
               <span className="text-sm mx-auto">
                 Already have an account{" "}
                 <Link
-                  href={"/login"}
+                  href="/login"
                   className="text-sky-500 xl:hover:underline ml-1"
                 >
                   Sign in

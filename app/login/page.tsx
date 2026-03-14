@@ -5,15 +5,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { signSchema } from "@/schemas/sign";
 import type { LoginFormData } from "@/types/login";
 import { FirebaseError } from "firebase/app";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import z from "zod";
-
-import { firebaseAuth } from "@/lib/firebase";
 
 interface ErrorsState {
   email: string | null;
@@ -22,7 +19,7 @@ interface ErrorsState {
 
 export default function Login() {
   const router = useRouter();
-  const { handleGoogleLogin } = useAuth();
+  const { handleLogin, handleGoogleLogin } = useAuth();
 
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
@@ -42,13 +39,15 @@ export default function Login() {
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: null });
+    setErrorMessage(null);
   }
 
-  async function handleLogin(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage(null);
 
     const result = signSchema.safeParse(formData);
+
     if (!result.success) {
       const flattened = z.flattenError(result.error);
       const fieldErrors = flattened.fieldErrors;
@@ -61,17 +60,14 @@ export default function Login() {
     }
 
     setIsSubmitting(true);
-    try {
-      await signInWithEmailAndPassword(
-        firebaseAuth,
-        result.data.email,
-        result.data.password,
-      );
 
+    try {
+      await handleLogin(result.data.email, result.data.password);
       router.push("/");
     } catch (err) {
       if (err instanceof FirebaseError) {
-        const code = String(err?.code || "");
+        const code = String(err.code || "");
+
         if (code === "auth/invalid-credential") {
           setErrorMessage("Неверный email или пароль.");
         } else {
@@ -88,6 +84,7 @@ export default function Login() {
   async function handleGoogleClick() {
     setErrorMessage(null);
     setIsGoogleSubmitting(true);
+
     try {
       await handleGoogleLogin();
       router.push("/");
@@ -130,7 +127,7 @@ export default function Login() {
               <div className="h-px flex-1 bg-neutral-200" />
             </div>
 
-            <form onSubmit={handleLogin} className="grid grid-cols-1 gap-5">
+            <form onSubmit={onSubmit} className="grid grid-cols-1 gap-5">
               <div className="flex flex-col relative">
                 <input
                   type="email"
@@ -175,7 +172,7 @@ export default function Login() {
 
               <div className="flex items-center justify-between">
                 <Link
-                  href={"/forgot-password"}
+                  href="/forgot-password"
                   className="text-sky-500 xl:hover:underline text-sm"
                 >
                   Forgot password?
@@ -192,7 +189,7 @@ export default function Login() {
               <span className="text-sm mx-auto">
                 Don&apos;t have an account{" "}
                 <Link
-                  href={"/signup"}
+                  href="/signup"
                   className="text-sky-500 xl:hover:underline ml-1"
                 >
                   Create an account now

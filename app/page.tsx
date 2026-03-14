@@ -10,9 +10,9 @@ export default function Home() {
   //   3) design error.tsx button
   //   4) forgot password
   // 5) catalogda bazdigi hell elemek
-  // 6) quantity type error hell elemek
-  // 7) style search input and search page
-  // 8) style cart and fix decrement error
+  // 6) quantity type error hell elemek //completed
+  // 7) style search input and search page //completed
+  // 8) style cart and fix decrement error //completed
   return (
     <>
       <Hero />
