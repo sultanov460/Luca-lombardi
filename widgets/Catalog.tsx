@@ -2,12 +2,11 @@
 
 import { Container } from "@/components/Container";
 import { CatalogProps } from "@/types/catalogData";
-import Link from "next/link";
 import { useState } from "react";
 import { ProductCard } from "./ProductCard";
 import { Product } from "@/types/product";
 
-export const Catalog = ({ catalogData }: { catalogData: any }) => {
+export const Catalog = ({ catalogData }: { catalogData: CatalogProps }) => {
   const [showMore, setShowMore] = useState(4);
   return (
     <div className="py-30">
