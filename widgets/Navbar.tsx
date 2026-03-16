@@ -8,7 +8,6 @@ import { IoMdSearch } from "react-icons/io";
 import { LuUser } from "react-icons/lu";
 import { GrClose } from "react-icons/gr";
 import { FiLogOut, FiShoppingCart } from "react-icons/fi";
-import { Menu } from "./Menu";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { firebaseAuth } from "@/lib/firebase";
@@ -21,14 +20,13 @@ export const Navbar = () => {
   const router = useRouter();
 
   const { user, loading } = useAppSelector((s) => s.auth);
-  const { query } = useAppSelector(s => s.search)
+  const { query } = useAppSelector((s) => s.search);
 
-
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   function handleSearch(e: FormEvent) {
-    e.preventDefault()
-    router.push('/search')
+    e.preventDefault();
+    router.push("/search");
   }
 
   const navLinks = [
@@ -43,7 +41,7 @@ export const Navbar = () => {
   }
 
   async function handleLogout() {
-    await firebaseAuth.signOut(); // Firebase сам скажет listener-у → Redux станет user=null
+    await firebaseAuth.signOut();
     router.push("/login");
   }
 
@@ -62,7 +60,12 @@ export const Navbar = () => {
             >
               <IoMdSearch size={26} />
               <form onSubmit={handleSearch}>
-                <input className="border" type="text" value={query} onChange={(e) => dispatch(setSearchQuery(e.target.value))} />
+                <input
+                  className="border"
+                  type="text"
+                  value={query}
+                  onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+                />
                 <button className="hidden md:block">Search</button>
               </form>
             </button>
