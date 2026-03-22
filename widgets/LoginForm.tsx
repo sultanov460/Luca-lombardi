@@ -71,12 +71,12 @@ export const LoginForm = () => {
       if (err instanceof FirebaseError) {
         const code = String(err?.code || "");
         if (code === "auth/invalid-credential") {
-          setErrorMessage("Неверный email или пароль.");
+          setErrorMessage("Invalid email or password.");
         } else {
-          setErrorMessage("Ошибка входа. Попробуй ещё раз.");
+          setErrorMessage("Login failed. Please try again.");
         }
       } else {
-        setErrorMessage("Ошибка входа. Попробуй ещё раз.");
+        setErrorMessage("Login failed. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
