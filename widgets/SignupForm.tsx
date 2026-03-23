@@ -73,13 +73,13 @@ export const SignupForm = () => {
       if (err instanceof FirebaseError) {
         const code = String(err?.code || "");
         if (code === "auth/email-already-in-use") {
-          setErrorMessage("Этот email уже зарегистрирован.");
+          setErrorMessage("This email is already registered.");
         } else if (code === "auth/weak-password") {
-          setErrorMessage("Слабый пароль (минимум 6 символов).");
+          setErrorMessage("Weak password (minimum 6 characters).");
         } else if (code === "auth/invalid-email") {
-          setErrorMessage("Неверный email.");
+          setErrorMessage("Invalid email address.");
         } else {
-          setErrorMessage("Ошибка регистрации. Попробуй ещё раз.");
+          setErrorMessage("Registration failed. Please try again.");
         }
       }
     } finally {
