@@ -1,6 +1,11 @@
 import { menCatalog, womenCatalog } from "@/data/catalog";
 import Banner from "@/widgets/Banner";
 import { NewCollectionList } from "@/widgets/NewCollection";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "New Collection",
+};
 
 export default function NewCollectionPage() {
   return (
