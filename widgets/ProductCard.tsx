@@ -5,6 +5,7 @@ interface Props {
   card: CatalogItem;
 }
 
+//salam
 export const ProductCard = ({ card }: Props) => {
   return (
     <Link
