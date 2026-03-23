@@ -44,8 +44,8 @@ export function MobileDrawer({
       >
         <div className="relative flex h-full flex-col">
           {/* Top */}
-          <div className="sticky top-0 z-10 bg-white/70 backdrop-blur-xl px-5 pt-16 pb-4 border-b border-black/5">
-            <Search className="block" />
+          <div className="top-0 z-10 bg-white/70 backdrop-blur-xl px-5 p-4 border-b border-black/5">
+            <Search className="!block" onClose={onClose} />
           </div>
 
           {/* Links */}

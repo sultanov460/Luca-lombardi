@@ -2,15 +2,18 @@
 
 import { Container } from "@/components/Container";
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { LuUser } from "react-icons/lu";
 import { GrClose } from "react-icons/gr";
 import { FiLogOut, FiShoppingCart } from "react-icons/fi";
 
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { firebaseAuth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
+import { setSearchQuery } from "@/store/slices/searchSlice";
+import { IoMdSearch } from "react-icons/io";
+import clsx from "clsx";
 import Search from "./Search";
 import { MobileDrawer } from "./MobileDrawer";
 
@@ -19,6 +22,18 @@ export const Navbar = () => {
   const router = useRouter();
 
   const { user, loading } = useAppSelector((s) => s.auth);
+  const { query } = useAppSelector((s) => s.search);
+
+  const dispatch = useAppDispatch();
+
+  function handleSearch(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    router.push("/search");
+  }
+
+  function handleClose() {
+    setIsNavActive(false);
+  }
 
   const navLinks = [
     { id: 1, title: "Women", href: "/women-collection" },
@@ -28,29 +43,28 @@ export const Navbar = () => {
   ];
 
   function toggleNav() {
-    setIsNavActive(!isNavActive);
+    setIsNavActive((prev) => !prev);
   }
 
   async function handleLogout() {
-    await firebaseAuth.signOut(); // Firebase сам скажет listener-у → Redux станет user=null
+    await firebaseAuth.signOut();
     router.push("/login");
   }
 
   return (
-    <nav className="sticky z-30 w-full top-0 bg-white text-gray-600 shadow-sm">
+    <nav className="sticky top-0 z-30 w-full bg-white text-gray-600 shadow-sm">
       <div>
-        <Container className="flex justify-between items-center p-5">
-          <Link href={"/"} className="text-xl font-bold tracking-wide">
+        <Container className="flex items-center justify-between p-5">
+          <Link href="/" className="text-xl font-bold tracking-wide">
             LUCA LOMBARDI
           </Link>
 
-          <div className="flex gap-6 md:gap-12 items-center">
-            <Search />
-
+          <div className="flex items-center gap-6 md:gap-12">
+            <Search onClose={handleClose} />
             {!loading && !user && (
               <Link
-                href={"/login"}
-                className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer"
+                href="/login"
+                className="flex cursor-pointer items-center gap-2 text-sm transition hover:opacity-50"
               >
                 <LuUser size={25} />
                 <span className="hidden md:block">Login</span>
@@ -60,8 +74,8 @@ export const Navbar = () => {
             {!loading && user && (
               <div className="flex items-center gap-6">
                 <Link
-                  href={"/cart"}
-                  className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer"
+                  href="/cart"
+                  className="flex cursor-pointer items-center gap-2 text-sm transition hover:opacity-50"
                   title="Cart"
                 >
                   <FiShoppingCart size={24} />
@@ -71,7 +85,7 @@ export const Navbar = () => {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="flex items-center gap-2 text-sm hover:opacity-50 transition cursor-pointer"
+                  className="flex cursor-pointer items-center gap-2 text-sm transition hover:opacity-50"
                   title="Logout"
                 >
                   <FiLogOut size={24} />
@@ -82,7 +96,7 @@ export const Navbar = () => {
 
             <button
               onClick={toggleNav}
-              className="z-50 flex items-center gap-2 text-sm hover:opacity-70 transition cursor-pointer md:hidden"
+              className="z-50 flex cursor-pointer items-center gap-2 text-sm transition hover:opacity-70 md:hidden"
               type="button"
             >
               {isNavActive ? (
@@ -94,8 +108,8 @@ export const Navbar = () => {
           </div>
         </Container>
 
-        <Container className="border-y border-gray-300 py-6 hidden md:flex justify-between items-center">
-          <div className="flex items-center gap-8 text-sm sm:text-md sm:gap-12 font-medium">
+        <Container className="hidden items-center justify-between border-y border-gray-300 py-6 md:flex">
+          <div className="flex items-center gap-8 text-sm font-medium sm:gap-12 sm:text-md">
             {navLinks.map((link) => (
               <Link className="hover:underline" key={link.id} href={link.href}>
                 {link.title}
@@ -104,21 +118,20 @@ export const Navbar = () => {
           </div>
 
           <Link
-            href={"/contact"}
-            className="bg-black px-9 py-3 rounded-lg cursor-pointer text-white text-sm font-normal "
+            href="/contact"
+            className="cursor-pointer rounded-lg bg-black px-9 py-3 text-sm font-normal text-white"
           >
             Contact Us!
           </Link>
         </Container>
-        <div>
-          <MobileDrawer
-            isOpen={isNavActive}
-            onClose={() => setIsNavActive(false)}
-            navLinks={navLinks}
-            onLogout={handleLogout}
-            isAuthenticated={!!user}
-          />
-        </div>
+
+        <MobileDrawer
+          isOpen={isNavActive}
+          onClose={handleClose}
+          navLinks={navLinks}
+          onLogout={handleLogout}
+          isAuthenticated={!!user}
+        />
       </div>
     </nav>
   );

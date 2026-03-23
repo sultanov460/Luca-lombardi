@@ -3,9 +3,10 @@ export interface Product {
   title: string;
   src: string;
   price: string;
+  isNew: boolean;
   collection: string;
 }
 
-export interface CartItem extends Product {
+export interface CartProduct extends Product {
   quantity: number;
 }

@@ -1,8 +1,8 @@
-import { Product } from "@/types/product";
+import { CatalogItem } from "@/types/catalogData";
 import Link from "next/link";
 
 interface Props {
-  card: Product;
+  card: CatalogItem;
 }
 
 export const ProductCard = ({ card }: Props) => {

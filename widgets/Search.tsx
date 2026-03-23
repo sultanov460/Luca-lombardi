@@ -8,9 +8,10 @@ import { IoMdSearch } from "react-icons/io";
 
 type Props = {
   className?: string;
+  onClose: () => void;
 };
 
-export default function Search({ className = "" }: Props) {
+export default function Search({ className = "", onClose }: Props) {
   const { query } = useAppSelector((s) => s.search);
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ export default function Search({ className = "" }: Props) {
   function handleSearch(e: FormEvent) {
     e.preventDefault();
     router.push("/search");
+    onClose();
   }
 
   return (
