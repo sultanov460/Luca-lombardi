@@ -1,11 +1,11 @@
 "use client";
 
 import { Container } from "@/components/Container";
-import { CatalogItem, CatalogProps } from "@/types/catalogData";
+import { CatalogItem } from "@/types/catalogData";
 import { useState } from "react";
 import { ProductCard } from "./ProductCard";
 
-export const Catalog = ({ catalogData }: { catalogData: CatalogProps }) => {
+export const Catalog = ({ catalogData }: { catalogData: CatalogItem[] }) => {
   const [showMore, setShowMore] = useState(4);
   return (
     <div className="py-30">
