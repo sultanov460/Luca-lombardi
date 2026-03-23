@@ -1,6 +1,11 @@
 import Banner from "@/widgets/Banner";
 import { Catalog } from "@/widgets/Catalog";
 import { menCatalog } from "@/data/catalog";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Men Collection",
+};
 
 export default function Men() {
   return (

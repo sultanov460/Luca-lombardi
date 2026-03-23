@@ -7,8 +7,4 @@ export type CatalogItem = {
   collection: string;
 };
 
-export type CatalogProps = {
-  menCollection: CatalogItem[];
-  womenCollection: CatalogItem[];
-  sunglassesCollection: CatalogItem[];
-};
+export type CatalogProps = CatalogItem[];

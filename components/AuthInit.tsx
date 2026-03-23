@@ -5,12 +5,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "@/lib/firebase";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setLoading, setUser } from "@/store/slices/authSlice";
-
+import CustomLoading from "@/widgets/CustomLoading";
 
 export function AuthInit() {
   const dispatch = useAppDispatch();
 
-  const { loading } = useAppSelector(state => state.auth)
+  const { loading } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(setLoading(true));
@@ -31,7 +31,7 @@ export function AuthInit() {
     return () => unsub();
   }, [dispatch]);
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <CustomLoading />;
 
   return null;
 }

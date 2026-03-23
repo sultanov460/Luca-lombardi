@@ -1,8 +1,8 @@
-import { Product } from "@/types/product";
+import { CatalogItem } from "@/types/catalogData";
 import Link from "next/link";
 
 interface Props {
-  card: Product;
+  card: CatalogItem;
 }
 
 export const ProductCard = ({ card }: Props) => {
@@ -18,9 +18,9 @@ export const ProductCard = ({ card }: Props) => {
         className="h-auto xl:h-100 object-cover rounded-xl w-full shadow-2xl"
       />
 
-      <div className="flex items-center justify-between mt-4 w-full px-2 gap-2">
-        <h2 className="truncate text-left flex-1">{card.title}</h2>
-        <span className="text-sm shrink-0">{card.price}</span>
+      <div className="flex items-center justify-between mt-4 w-full px-2">
+        <h2>{card.title}</h2>
+        <span className="text-sm">{card.price}</span>
       </div>
     </Link>
   );
