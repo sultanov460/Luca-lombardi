@@ -11,9 +11,7 @@ import { FiLogOut, FiShoppingCart } from "react-icons/fi";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { firebaseAuth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
-import { setSearchQuery } from "@/store/slices/searchSlice";
-import { IoMdSearch } from "react-icons/io";
-import clsx from "clsx";
+
 import Search from "./Search";
 import { MobileDrawer } from "./MobileDrawer";
 
@@ -51,6 +49,10 @@ export const Navbar = () => {
     router.push("/login");
   }
 
+  const cartItemCount = useAppSelector((state) =>
+    state.cart.items.reduce((total, item) => total + item.quantity, 0),
+  );
+
   return (
     <nav className="sticky top-0 z-30 w-full bg-white text-gray-600 shadow-sm">
       <div>
@@ -75,10 +77,15 @@ export const Navbar = () => {
               <div className="flex items-center gap-6">
                 <Link
                   href="/cart"
-                  className="flex cursor-pointer items-center gap-2 text-sm transition hover:opacity-50"
+                  className="relative flex cursor-pointer items-center gap-2 text-sm transition hover:opacity-50"
                   title="Cart"
                 >
                   <FiShoppingCart size={24} />
+                  {cartItemCount > 0 && (
+                    <span className="absolute -top-2.5 right-6.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-medium text-white">
+                      {cartItemCount > 9 ? "9+" : cartItemCount}
+                    </span>
+                  )}
                   <span className="hidden md:block">Cart</span>
                 </Link>
 
