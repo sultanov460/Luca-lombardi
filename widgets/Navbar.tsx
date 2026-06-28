@@ -52,7 +52,7 @@ export const Navbar = () => {
   const cartItemCount = useAppSelector((state) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0),
   );
-f
+
   return (
     <nav className="sticky top-0 z-30 w-full bg-white text-gray-600 shadow-sm">
       <div>

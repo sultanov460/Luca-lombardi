@@ -8,7 +8,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const product = womenCatalog.find((p) => p.id === Number(id));
+  const product = womenCatalog.find((p) => p.id === String(id));
 
   return {
     title: product ? product.title : "Product not found",
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function WomenDetailsPage({ params }: Props) {
   const { id } = await params;
-  const product = womenCatalog.find((p) => p.id === Number(id));
+  const product = womenCatalog.find((p) => p.id === String(id));
 
   if (!product) {
     return <div className="p-20 text-center">Product not found</div>;
