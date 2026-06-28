@@ -1,6 +1,6 @@
 export const womenCatalog = [
   {
-    id: 1,
+    id: "w1",
     title: "Quiet Luxury",
     src: "/women.jpeg",
     price: "557$",
@@ -8,7 +8,7 @@ export const womenCatalog = [
     collection: "women-collection",
   },
   {
-    id: 2,
+    id: "w2",
     title: "Quiet Luxury",
     src: "/women.jpeg",
     price: "557$",
@@ -16,7 +16,7 @@ export const womenCatalog = [
     collection: "women-collection",
   },
   {
-    id: 3,
+    id: "w3",
     title: "Quiet Luxury",
     src: "/women.jpeg",
     price: "557$",
@@ -24,7 +24,7 @@ export const womenCatalog = [
     collection: "women-collection",
   },
   {
-    id: 4,
+    id: "w4",
     title: "Quiet Luxury",
     src: "/women.jpeg",
     price: "557$",
@@ -32,7 +32,7 @@ export const womenCatalog = [
     collection: "women-collection",
   },
   {
-    id: 5,
+    id: "w5",
     title: "Quiet Luxury",
     src: "/women.jpeg",
     price: "557$",
@@ -40,7 +40,7 @@ export const womenCatalog = [
     collection: "women-collection",
   },
   {
-    id: 6,
+    id: "w6",
     title: "Quiet Luxury",
     src: "/women.jpeg",
     price: "557$",
@@ -48,7 +48,7 @@ export const womenCatalog = [
     collection: "women-collection",
   },
   {
-    id: 7,
+    id: "w7",
     title: "Quiet Luxury",
     src: "/women.jpeg",
     price: "557$",
@@ -56,7 +56,7 @@ export const womenCatalog = [
     collection: "women-collection",
   },
   {
-    id: 8,
+    id: "w8",
     title: "Quiet Luxury",
     src: "/women.jpeg",
     price: "557$",
@@ -64,7 +64,7 @@ export const womenCatalog = [
     collection: "women-collection",
   },
   {
-    id: 9,
+    id: "w9",
     title: "Quiet Luxury",
     src: "/women.jpeg",
     price: "557$",
@@ -72,7 +72,7 @@ export const womenCatalog = [
     collection: "women-collection",
   },
   {
-    id: 10,
+    id: "w10",
     title: "Quiet Luxury",
     src: "/women.jpeg",
     price: "557$",
@@ -83,7 +83,7 @@ export const womenCatalog = [
 
 export const menCatalog = [
   {
-    id: 1,
+    id: "m1",
     title: "Beige Oversized Blazer",
     src: "/men/beige.png",
     price: "129$",
@@ -91,7 +91,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 2,
+    id: "m2",
     title: "Minimal Beige Lounge Set",
     src: "/men/minimal-beige.png",
     price: "99$",
@@ -99,7 +99,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 3,
+    id: "m3",
     title: "Wool Coat",
     src: "/men/wool-coat.png",
     price: "179$",
@@ -107,7 +107,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 4,
+    id: "m4",
     title: "Obsidian Elite Overcoat",
     src: "/men/obsidian.png",
     price: "1057$",
@@ -115,7 +115,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 5,
+    id: "m5",
     title: "Navy Tailored Business Suit",
     src: "/men/navy-business.png",
     price: "199$",
@@ -123,7 +123,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 6,
+    id: "m6",
     title: "Beige Suede Shearling Jacket Set",
     src: "/men/beige-suede.png",
     price: "149$",
@@ -131,7 +131,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 7,
+    id: "m7",
     title: "Black Slim Fit Shirt",
     src: "/men/black-slim.png",
     price: "89$",
@@ -139,7 +139,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 8,
+    id: "m8",
     title: "Vintage Olive Bomber Jacket",
     src: "/men/bomber-jacket.png",
     price: "129$",
@@ -147,7 +147,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 9,
+    id: "m9",
     title: "Urban Camo Puffer Jacket",
     src: "/men/urban.png",
     price: "119$",
@@ -155,7 +155,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 10,
+    id: "m10",
     title: "Beige Corduroy Jacket Layered Set",
     src: "/men/corduroy-jacket.png",
     price: "107$",
@@ -163,7 +163,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 11,
+    id: "m11",
     title: "Taupe Suede Bomber Jacket",
     src: "/men/taupe.png",
     price: "139$",
@@ -171,7 +171,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 12,
+    id: "m12",
     title: "Cream Urban Puffer Jacket Set",
     src: "/men/cream-urban.png",
     price: "129$",
@@ -179,7 +179,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 13,
+    id: "m13",
     title: "Oversized Graphic Street Tee",
     src: "/men/oversized-shirt.png",
     price: "39$",
@@ -187,7 +187,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 14,
+    id: "m14",
     title: "Relaxed Fit Grey Hoodie",
     src: "/men/relaxed.png",
     price: "59$",
@@ -195,7 +195,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 15,
+    id: "m15",
     title: "Wool Monogram Jacket Cream Edition",
     src: "/men/wool-monogram.png",
     price: "1290$",
@@ -203,7 +203,7 @@ export const menCatalog = [
     collection: "men-collection",
   },
   {
-    id: 16,
+    id: "m16",
     title: "Premium Black Puffer Jacket",
     src: "/men/premium-black.png",
     price: "289$",
@@ -214,7 +214,7 @@ export const menCatalog = [
 
 export const sunglassesCatalog = [
   {
-    id: 1,
+    id: "s1",
     title: "Luna Noir Cat-Eye Sunglasses",
     src: "/sunglasses/sunglasses-luna.png",
     price: "89$",
@@ -222,7 +222,7 @@ export const sunglassesCatalog = [
     collection: "sunglasses-collection",
   },
   {
-    id: 2,
+    id: "s2",
     title: "Urban Classic Wayfarer Sunglasses",
     src: "/sunglasses/sunglasses-urban.png",
     price: "79$",
@@ -230,7 +230,7 @@ export const sunglassesCatalog = [
     collection: "sunglasses-collection",
   },
   {
-    id: 3,
+    id: "s3",
     title: "Harper Gold Round Sunglasses",
     src: "/sunglasses/sunglasses-harper.png",
     price: "89$",
@@ -238,7 +238,7 @@ export const sunglassesCatalog = [
     collection: "sunglasses-collection",
   },
   {
-    id: 4,
+    id: "s4",
     title: "Milan Gold Square Sunglasses",
     src: "/sunglasses/sunglasses-milan.png",
     price: "109$",
@@ -246,7 +246,7 @@ export const sunglassesCatalog = [
     collection: "sunglasses-collection",
   },
   {
-    id: 5,
+    id: "s5",
     title: "Monaco Cream Cat-Eye Sunglasses",
     src: "/sunglasses/sunglasses-monaco.png",
     price: "95$",
@@ -254,7 +254,7 @@ export const sunglassesCatalog = [
     collection: "sunglasses-collection",
   },
   {
-    id: 6,
+    id: "s6",
     title: "Aspen Silver D-Frame Sunglasses",
     src: "/sunglasses/sunglasses-aspen.png",
     price: "99$",
@@ -262,7 +262,7 @@ export const sunglassesCatalog = [
     collection: "sunglasses-collection",
   },
   {
-    id: 7,
+    id: "s7",
     title: "Valencia Oversized Square Sunglasses",
     src: "/sunglasses/sunglasses-valencia.png",
     price: "557$",
@@ -270,7 +270,7 @@ export const sunglassesCatalog = [
     collection: "sunglasses-collection",
   },
   {
-    id: 8,
+    id: "s8",
     title: "Riviera Tortoiseshell Wayfarer Sunglasses",
     src: "/sunglasses/sunglasses-riviera.png",
     price: "105$",
@@ -278,7 +278,7 @@ export const sunglassesCatalog = [
     collection: "sunglasses-collection",
   },
   {
-    id: 9,
+    id: "s9",
     title: "Aurora Black Elegance Sunglasse",
     src: "/sunglasses/sunglasses-aurora.png",
     price: "115$",
@@ -286,7 +286,7 @@ export const sunglassesCatalog = [
     collection: "sunglasses-collection",
   },
   {
-    id: 10,
+    id: "s10",
     title: "Sienna Tortoiseshell Cat-Eye Sunglasses",
     src: "/sunglasses/sunglasses-sienna.png",
     price: "109$",
