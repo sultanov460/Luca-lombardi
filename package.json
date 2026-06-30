@@ -23,7 +23,7 @@
     "react-phone-input-2": "^2.15.1",
     "react-redux": "^9.2.0",
     "react-spinners": "^0.17.0",
-    "swiper": "^12.1.0",
+    "swiper": "^12.2.0",
     "zod": "^4.3.5"
   },
   "devDependencies": {
