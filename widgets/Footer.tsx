@@ -14,7 +14,7 @@ export const Footer = () => {
           label: "Men",
           href: "/men-collection",
         },
-        { id: 3, label: "New Arrivals", href: "new-arrivals" },
+        { id: 3, label: "New Collection", href: "/new-collection" },
         { id: 4, label: "About", href: "/about" },
       ],
     },
@@ -38,7 +38,7 @@ export const Footer = () => {
     },
   ];
   return (
-    <div className="bg-slate-800 py-15 sm:py-30 px-5 text-white">
+    <div className="bg-gradient-to-b from-slate-900 to-slate-800 py-15 sm:py-30 px-5 text-white">
       <Container className="flex flex-col sm:flex-row sm:flex-wrap gap-10 justify-center text-center lg:flex-nowrap lg:justify-between lg:text-left">
         <div>
           <Link href={"/"} className="text-3xl font-bold tracking-wide">
@@ -69,7 +69,8 @@ export const Footer = () => {
         <div className="flex flex-col gap-10">
           <h3 className="text-2xl font-light">Subscribe to our newsletter!</h3>
           <p className="max-w-90">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, atque.
+            Stay ahead with exclusive updates, new releases, and carefully
+            curated insights. Join our community and never miss what's next.
           </p>
           <form className="relative">
             <input
