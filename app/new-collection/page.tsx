@@ -1,4 +1,4 @@
-import { menCatalog, sunglassesCatalog, womenCatalog } from "@/data/catalog";
+import { products } from "@/data/catalog";
 import Banner from "@/widgets/Banner";
 import { NewCollectionList } from "@/widgets/NewCollection";
 import { Metadata } from "next";
@@ -16,11 +16,7 @@ export default function NewCollectionPage() {
         bgClass="bg-newCollection"
       />
 
-      <NewCollectionList
-        menCollection={menCatalog}
-        womenCollection={womenCatalog}
-        sunglassesCollection={sunglassesCatalog}
-      />
+      <NewCollectionList products={products} />
     </div>
   );
 }
