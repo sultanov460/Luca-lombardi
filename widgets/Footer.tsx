@@ -70,7 +70,8 @@ export const Footer = () => {
           <h3 className="text-2xl font-light">Subscribe to our newsletter!</h3>
           <p className="max-w-90">
             Stay ahead with exclusive updates, new releases, and carefully
-            curated insights. Join our community and never miss what's next.
+            curated insights. Join our community and never miss what&apos;s
+            next.
           </p>
           <form className="relative">
             <input

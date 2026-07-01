@@ -1,194 +1,122 @@
 "use client";
 
 import { Container } from "@/components/Container";
-import type { CatalogProps } from "@/types/catalogData";
-
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
-
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
-import Link from "next/link";
+import { Product } from "@/types/product";
+import { ProductCard } from "./ProductCard";
 
-export const NewCollectionList = ({
-  menCollection,
-  womenCollection,
-  sunglassesCollection,
-}: CatalogProps) => {
-  const menNew = menCollection.filter((item) => item.isNew);
-  const womenNew = womenCollection.filter((item) => item.isNew);
-  const sunglassesNew = sunglassesCollection.filter((item) => item.isNew);
+interface NewCollectionListProps {
+  products: Product[];
+}
+
+interface CollectionSectionProps {
+  title: string;
+  items: Product[];
+  delay: number;
+}
+
+const breakpoints = {
+  320: {
+    slidesPerView: 1,
+    spaceBetween: 12,
+  },
+  640: {
+    slidesPerView: 2,
+    spaceBetween: 16,
+  },
+  1024: {
+    slidesPerView: 3,
+    spaceBetween: 20,
+  },
+  1280: {
+    slidesPerView: 4,
+    spaceBetween: 24,
+  },
+};
+
+const CollectionSection = ({ title, items, delay }: CollectionSectionProps) => {
+  if (!items.length) return null;
 
   return (
-    <div className="py-12">
-      <Container className="text-lg text-neutral-600 font-medium">
-        {/* MEN */}
-        <div className="mb-14">
-          <h1 className="mb-4 text-neutral-900">For Men</h1>
+    <section className="mb-16 last:mb-0">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
 
-          <Swiper
-            modules={[Autoplay, Pagination]}
-            loop
-            autoplay={{
-              delay: 2800,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }}
-            pagination={{ clickable: true }}
-            spaceBetween={18}
-            slidesPerView={1}
-            breakpoints={{
-              640: { slidesPerView: 2.1 },
-              1024: { slidesPerView: 3.1 },
-            }}
-            className="new-swiper"
-          >
-            {menNew.map((item) => (
-              <SwiperSlide key={item.id}>
-                <Link
-                  href={`${item.collection}/${item.id}`}
-                  className="group relative"
-                >
-                  <div className="relative h-[360px] w-full overflow-hidden rounded-2xl bg-neutral-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
-                    <img
-                      src={item.src}
-                      alt={item.title}
-                      className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                      draggable={false}
-                      loading="lazy"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/5" />
-                    <p className="absolute left-3 top-3 rounded-full bg-orange-600 px-3 py-1 text-sm text-white">
-                      NEW
-                    </p>
-                  </div>
-                  <h1 className="mt-3 text-base font-medium text-neutral-900 transition-colors duration-300 group-hover:text-neutral-700">
-                    {item.title}
-                  </h1>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        <button className="text-sm font-medium text-neutral-500 hover:text-black transition-colors">
+          View all →
+        </button>
+      </div>
+
+      <Swiper
+        modules={[Autoplay]}
+        className="w-full"
+        breakpoints={breakpoints}
+        loop
+        autoplay={{
+          delay,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+      >
+        {items.map((product) => (
+          <SwiperSlide key={product.id}>
+            <ProductCard card={product} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </section>
+  );
+};
+
+export const NewCollectionList = ({ products }: NewCollectionListProps) => {
+  const collections = [
+    {
+      title: "Women's Collection",
+      collection: "women-collection",
+      delay: 4000,
+    },
+    {
+      title: "Men's Collection",
+      collection: "men-collection",
+      delay: 5000,
+    },
+    {
+      title: "Sunglasses",
+      collection: "sunglasses-collection",
+      delay: 6000,
+    },
+  ];
+
+  return (
+    <div className="py-12 bg-white">
+      <Container>
+        <div className="mb-12 text-center">
+          <span className="text-sm font-medium text-neutral-400 uppercase tracking-wider">
+            New Arrivals
+          </span>
+
+          <h1 className="text-[2.5rem] md:text-[4rem] font-bold mt-2 tracking-tight">
+            New Collection
+          </h1>
+
+          <p className="text-neutral-500 mt-3 max-w-md mx-auto">
+            Fresh seasonal arrivals
+          </p>
         </div>
 
-        <div>
-          <h1 className="mb-4 text-neutral-900">For Women</h1>
-          <Swiper
-            modules={[Autoplay, Pagination]}
-            loop
-            autoplay={{
-              delay: 2800,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }}
-            pagination={{ clickable: true }}
-            spaceBetween={18}
-            slidesPerView={1}
-            breakpoints={{
-              640: { slidesPerView: 2.1 },
-              1024: { slidesPerView: 3.1 },
-            }}
-            className="new-swiper"
-          >
-            {womenNew.map((item) => (
-              <SwiperSlide key={item.id}>
-                <Link
-                  href={`${item.collection}/${item.id}`}
-                  className="group relative"
-                >
-                  <div className="relative h-[360px] w-full overflow-hidden rounded-2xl bg-neutral-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
-                    <img
-                      src={item.src}
-                      alt={item.title}
-                      className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                      draggable={false}
-                      loading="lazy"
-                    />
-
-                    <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/5" />
-
-                    <p className="absolute left-3 top-3 rounded-full bg-orange-600 px-3 py-1 text-sm text-white">
-                      NEW
-                    </p>
-                  </div>
-
-                  <h1 className="mt-3 text-base font-medium text-neutral-900 transition-colors duration-300 group-hover:text-neutral-700">
-                    {item.title}
-                  </h1>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        <div>
-          <h1 className="mb-4 text-neutral-900">Sunglasses</h1>
-          <Swiper
-            modules={[Autoplay, Pagination]}
-            loop
-            autoplay={{
-              delay: 2800,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }}
-            pagination={{ clickable: true }}
-            spaceBetween={18}
-            slidesPerView={1}
-            breakpoints={{
-              640: { slidesPerView: 2.1 },
-              1024: { slidesPerView: 3.1 },
-            }}
-            className="new-swiper"
-          >
-            {sunglassesNew.map((item) => (
-              <SwiperSlide key={item.id}>
-                <Link
-                  href={`${item.collection}/${item.id}`}
-                  className="group relative"
-                >
-                  <div className="relative h-[360px] w-full overflow-hidden rounded-2xl bg-neutral-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
-                    <img
-                      src={item.src}
-                      alt={item.title}
-                      className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                      draggable={false}
-                      loading="lazy"
-                    />
-
-                    <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/5" />
-
-                    <p className="absolute left-3 top-3 rounded-full bg-orange-600 px-3 py-1 text-sm text-white">
-                      NEW
-                    </p>
-                  </div>
-
-                  <h1 className="mt-3 text-base font-medium text-neutral-900 transition-colors duration-300 group-hover:text-neutral-700">
-                    {item.title}
-                  </h1>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+        {collections.map(({ title, collection, delay }) => (
+          <CollectionSection
+            key={collection}
+            title={title}
+            delay={delay}
+            items={products.filter(
+              (product) => product.collection === collection && product.isNew,
+            )}
+          />
+        ))}
       </Container>
-
-      <style jsx global>{`
-        .new-swiper {
-          padding-bottom: 34px;
-        }
-        .new-swiper .swiper-pagination {
-          bottom: 0px !important;
-        }
-        .new-swiper .swiper-pagination-bullet {
-          width: 7px;
-          height: 7px;
-          opacity: 1;
-          background: rgb(212, 212, 212);
-        }
-        .new-swiper .swiper-pagination-bullet-active {
-          background: rgb(23, 23, 23);
-        }
-      `}</style>
     </div>
   );
 };
