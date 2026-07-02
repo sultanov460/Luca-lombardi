@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { useAppDispatch } from "@/store/hooks";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { BreadCrumb } from "./BreadCrumb";
 import { Product, Size } from "@/types/product";
 import { addToCart } from "@/store/slices/cartSlice";
@@ -13,7 +14,20 @@ const SIZES: Size[] = ["S", "M", "L"];
 
 export default function Details({ product }: DetailsProps) {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { user, loading } = useAppSelector((state) => state.auth);
   const [selectedSize, setSelectedSize] = useState<Size>("M");
+
+  const handleAddToCart = () => {
+    if (loading) return;
+
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+
+    dispatch(addToCart({ ...product, size: selectedSize, quantity: 1 }));
+  };
 
   return (
     <main className="min-h-screen bg-white">
@@ -72,16 +86,9 @@ export default function Details({ product }: DetailsProps) {
 
               <div className="mt-7 flex flex-col gap-3">
                 <button
-                  onClick={() =>
-                    dispatch(
-                      addToCart({
-                        ...product,
-                        size: selectedSize,
-                        quantity: 1,
-                      }),
-                    )
-                  }
-                  className="h-12 rounded-2xl bg-zinc-900 text-white font-semibold tracking-wide hover:bg-black transition shadow-[0_10px_25px_rgba(0,0,0,0.18)] cursor-pointer"
+                  onClick={handleAddToCart}
+                  disabled={loading}
+                  className="h-12 rounded-2xl bg-zinc-900 text-white font-semibold tracking-wide hover:bg-black transition shadow-[0_10px_25px_rgba(0,0,0,0.18)] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   Add to cart
                 </button>
