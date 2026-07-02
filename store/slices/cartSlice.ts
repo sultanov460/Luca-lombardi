@@ -1,5 +1,5 @@
 import { CartProduct } from "@/types/product";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface InitialState {
   items: CartProduct[];
@@ -9,29 +9,40 @@ const initialState: InitialState = {
   items: [],
 };
 
+interface CartItemKey {
+  id: string;
+  size: string;
+}
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action) => {
+    addToCart: (state, action: PayloadAction<CartProduct>) => {
       const product = action.payload;
-      const existingItem = state.items.find((item) => item.id === product.id);
+      const existingItem = state.items.find(
+        (item) => item.id === product.id && item.size === product.size,
+      );
 
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
-        state.items.push({ ...product, quantity: 1 });
+        state.items.unshift({ ...product, quantity: 1 });
       }
     },
 
-    removeFromCart: (state, action) => {
-      const product = action.payload;
-      state.items = state.items.filter((item) => item.id !== product);
+    removeFromCart: (state, action: PayloadAction<CartItemKey>) => {
+      const { id, size } = action.payload;
+      state.items = state.items.filter(
+        (item) => !(item.id === id && item.size === size),
+      );
     },
 
-    decreaseQuantity: (state, action) => {
-      const product = action.payload;
-      const item = state.items.find((item) => item.id === product);
+    decreaseQuantity: (state, action: PayloadAction<CartItemKey>) => {
+      const { id, size } = action.payload;
+      const item = state.items.find(
+        (item) => item.id === id && item.size === size,
+      );
 
       if (!item) {
         console.log("No");
@@ -41,7 +52,9 @@ export const cartSlice = createSlice({
       if (item.quantity > 1) {
         item.quantity -= 1;
       } else {
-        state.items = state.items.filter((item) => item.id !== product);
+        state.items = state.items.filter(
+          (item) => !(item.id === id && item.size === size),
+        );
       }
     },
 

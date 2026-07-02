@@ -62,15 +62,13 @@ export const Cart = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_380px]">
-          {/* Items */}
           <div className="space-y-4">
             {cartItems.map((item) => (
               <div
-                key={item.id}
+                key={`${item.id}-${item.size}`}
                 className="rounded-3xl border border-black/10 bg-white p-4 shadow-sm sm:p-5"
               >
                 <div className="flex gap-4 sm:gap-5">
-                  {/* Image */}
                   <div className="relative h-28 w-24 flex-shrink-0 overflow-hidden rounded-2xl bg-gray-100 sm:h-32 sm:w-28">
                     {item.src ? (
                       <Image
@@ -83,7 +81,6 @@ export const Cart = () => {
                     ) : null}
                   </div>
 
-                  {/* Info */}
                   <div className="flex flex-1 flex-col">
                     <div className="flex items-start justify-between gap-3">
                       <div>
@@ -93,6 +90,9 @@ export const Cart = () => {
                         <p className="mt-1 text-sm text-gray-500">
                           {item.collection}
                         </p>
+                        <span className="mt-2 inline-flex items-center rounded-full border border-black/10 bg-black/5 px-2.5 py-0.5 text-xs font-medium text-gray-700">
+                          Size: {item.size}
+                        </span>
                       </div>
 
                       <div className="text-right">
@@ -104,11 +104,17 @@ export const Cart = () => {
                     </div>
 
                     <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-                      {/* Quantity */}
                       <div className="inline-flex items-center gap-2 rounded-2xl border border-black/10 bg-white px-2 py-2">
                         <button
                           type="button"
-                          onClick={() => dispatch(decreaseQuantity(item.id))}
+                          onClick={() =>
+                            dispatch(
+                              decreaseQuantity({
+                                id: item.id,
+                                size: item.size,
+                              }),
+                            )
+                          }
                           className="grid cursor-pointer h-9 w-9 place-items-center rounded-xl hover:bg-black/5 active:scale-[0.98] transition"
                           aria-label="Decrease quantity"
                         >
@@ -129,10 +135,13 @@ export const Cart = () => {
                         </button>
                       </div>
 
-                      {/* Remove */}
                       <button
                         type="button"
-                        onClick={() => dispatch(removeFromCart(item.id))}
+                        onClick={() =>
+                          dispatch(
+                            removeFromCart({ id: item.id, size: item.size }),
+                          )
+                        }
                         className="inline-flex cursor-pointer items-center gap-2 rounded-2xl border border-black/10 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-black/5 transition"
                       >
                         <FiTrash2 />
@@ -145,7 +154,6 @@ export const Cart = () => {
             ))}
           </div>
 
-          {/* Summary */}
           <aside className="h-fit rounded-3xl border border-black/10 bg-white p-6 shadow-sm lg:sticky lg:top-24">
             <h2 className="text-lg font-semibold text-gray-900">
               Order summary
