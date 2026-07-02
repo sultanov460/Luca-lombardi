@@ -1,6 +1,6 @@
-import { products } from "@/data/catalog";
+import { menCatalog, sunglassesCatalog, womenCatalog } from "@/data/catalog";
 import Banner from "@/widgets/Banner";
-import { NewCollectionList } from "@/widgets/NewCollection";
+import NewCollectionList from "@/widgets/NewCollection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +16,21 @@ export default function NewCollectionPage() {
         bgClass="bg-newCollection"
       />
 
-      <NewCollectionList products={products} />
+      <NewCollectionList
+        title="For men"
+        delay={3000}
+        collections={menCatalog}
+      />
+      <NewCollectionList
+        title="For wooman"
+        delay={3500}
+        collections={womenCatalog}
+      />
+      <NewCollectionList
+        title="Sunglasses"
+        delay={4000}
+        collections={sunglassesCatalog}
+      />
     </div>
   );
 }
