@@ -53,6 +53,7 @@ export default function NewCollectionList({
         autoplay={{
           delay: delay,
           disableOnInteraction: false,
+          pauseOnMouseEnter: true,
         }}
       >
         {newCollections.map((collection) => (
