@@ -1,15 +1,20 @@
 "use client";
+import { useState } from "react";
 import { useAppDispatch } from "@/store/hooks";
 import { BreadCrumb } from "./BreadCrumb";
-import { Product } from "@/types/product";
+import { Product, Size } from "@/types/product";
 import { addToCart } from "@/store/slices/cartSlice";
 
 interface DetailsProps {
   product: Product;
 }
 
+const SIZES: Size[] = ["S", "M", "L"];
+
 export default function Details({ product }: DetailsProps) {
   const dispatch = useAppDispatch();
+  const [selectedSize, setSelectedSize] = useState<Size>("M");
+
   return (
     <main className="min-h-screen bg-white">
       <div className="relative mx-auto w-full max-w-6xl px-5 sm:px-8 pt-10 pb-18">
@@ -31,6 +36,7 @@ export default function Details({ product }: DetailsProps) {
               </div>
             </div>
           </section>
+
           <section className="w-full lg:sticky lg:top-8 h-fit">
             <div className="rounded-3xl border border-zinc-100 bg-white shadow-[0_10px_40px_rgba(0,0,0,0.06)] p-6 sm:p-8">
               <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-zinc-900">
@@ -43,14 +49,44 @@ export default function Details({ product }: DetailsProps) {
                 Clean minimal piece from the {product.collection} collection.
                 Premium look, everyday comfort.
               </p>
+
+              <div className="mt-6">
+                <p className="text-xs font-semibold text-zinc-900 mb-2">Size</p>
+                <div className="flex gap-2">
+                  {SIZES.map((size) => (
+                    <button
+                      key={size}
+                      type="button"
+                      onClick={() => setSelectedSize(size)}
+                      className={`h-11 w-11 rounded-xl border text-sm font-semibold transition cursor-pointer ${
+                        selectedSize === size
+                          ? "bg-zinc-900 text-white border-zinc-900"
+                          : "bg-white text-zinc-900 border-zinc-200 hover:border-zinc-400"
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="mt-7 flex flex-col gap-3">
                 <button
-                  onClick={() => dispatch(addToCart(product))}
+                  onClick={() =>
+                    dispatch(
+                      addToCart({
+                        ...product,
+                        size: selectedSize,
+                        quantity: 1,
+                      }),
+                    )
+                  }
                   className="h-12 rounded-2xl bg-zinc-900 text-white font-semibold tracking-wide hover:bg-black transition shadow-[0_10px_25px_rgba(0,0,0,0.18)] cursor-pointer"
                 >
                   Add to cart
                 </button>
               </div>
+
               <div className="mt-8 grid grid-cols-3 gap-3">
                 <div className="rounded-2xl border border-zinc-100 bg-zinc-50 p-3">
                   <p className="text-xs font-semibold text-zinc-900">
