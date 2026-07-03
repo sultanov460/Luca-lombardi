@@ -20,6 +20,22 @@ export const Cart = () => {
     return sum + price * item.quantity;
   }, 0);
 
+  const handleCheckout = async () => {
+    const res = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: cartItems }),
+    });
+
+    const data = await res.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      console.error(data.error);
+    }
+  };
+
   if (!cartItems.length) {
     return (
       <div className="pt-20 pb-24">
@@ -181,6 +197,7 @@ export const Cart = () => {
 
             <button
               type="button"
+              onClick={handleCheckout}
               className="mt-6 w-full cursor-pointer rounded-2xl bg-black px-5 py-3 text-sm font-medium text-white hover:opacity-90 transition"
             >
               Checkout
