@@ -22,15 +22,22 @@ export default function Details({ product }: DetailsProps) {
 
   const handleAddToCart = () => {
     if (loading) return;
-
     if (!selectedSize) return setSizeError("Please select a size!");
+    if (selectedSize.stock <= 0)
+      return setSizeError("This size is out of stock!");
 
     if (!user) {
       router.push("/login");
       return;
     }
 
-    // dispatch(addToCart({ ...product, size: selectedSize, quantity: 1 }));
+    dispatch(
+      addToCart({
+        ...product,
+        sizes: [selectedSize],
+        quantity: 1,
+      }),
+    );
   };
 
   const handleCartSelect = (sizeId: number) => {

@@ -79,95 +79,110 @@ export const Cart = () => {
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_380px]">
           <div className="space-y-4">
-            {cartItems.map((item) => (
-              <div
-                key={`${item.id}-${item.size}`}
-                className="rounded-3xl border border-black/10 bg-white p-4 shadow-sm sm:p-5"
-              >
-                <div className="flex gap-4 sm:gap-5">
-                  <div className="relative h-28 w-24 flex-shrink-0 overflow-hidden rounded-2xl bg-gray-100 sm:h-32 sm:w-28">
-                    {item.src ? (
-                      <Image
-                        src={item.src}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                        sizes="120px"
-                      />
-                    ) : null}
-                  </div>
+            {cartItems.map((item) => {
+              const selectedSize = item.sizes[0];
+              const atMaxStock = item.quantity >= selectedSize.stock;
 
-                  <div className="flex flex-1 flex-col">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          {item.title}
-                        </h3>
-                        <p className="mt-1 text-sm text-gray-500">
-                          {item.collection}
-                        </p>
-                        <span className="mt-2 inline-flex items-center rounded-full border border-black/10 bg-black/5 px-2.5 py-0.5 text-xs font-medium text-gray-700">
-                          Size: {item.size}
-                        </span>
-                      </div>
-
-                      <div className="text-right">
-                        <p className="text-sm text-gray-500">Price</p>
-                        <p className="text-lg font-semibold text-gray-900">
-                          {item.price}
-                        </p>
-                      </div>
+              return (
+                <div
+                  key={`${item.id}-${selectedSize.id}`}
+                  className="rounded-3xl border border-black/10 bg-white p-4 shadow-sm sm:p-5"
+                >
+                  <div className="flex gap-4 sm:gap-5">
+                    <div className="relative h-28 w-24 flex-shrink-0 overflow-hidden rounded-2xl bg-gray-100 sm:h-32 sm:w-28">
+                      {item.src ? (
+                        <Image
+                          src={item.src}
+                          alt={item.title}
+                          fill
+                          className="object-cover"
+                          sizes="120px"
+                        />
+                      ) : null}
                     </div>
 
-                    <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-                      <div className="inline-flex items-center gap-2 rounded-2xl border border-black/10 bg-white px-2 py-2">
+                    <div className="flex flex-1 flex-col">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900">
+                            {item.title}
+                          </h3>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {item.collection}
+                          </p>
+                          <span className="mt-2 inline-flex items-center rounded-full border border-black/10 bg-black/5 px-2.5 py-0.5 text-xs font-medium text-gray-700">
+                            Size: {selectedSize.label}
+                          </span>
+                        </div>
+
+                        <div className="text-right">
+                          <p className="text-sm text-gray-500">Price</p>
+                          <p className="text-lg font-semibold text-gray-900">
+                            {item.price}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+                        <div className="inline-flex items-center gap-2 rounded-2xl border border-black/10 bg-white px-2 py-2">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              dispatch(
+                                decreaseQuantity({
+                                  id: item.id,
+                                  sizeId: selectedSize.id,
+                                }),
+                              )
+                            }
+                            className="grid cursor-pointer h-9 w-9 place-items-center rounded-xl hover:bg-black/5 active:scale-[0.98] transition"
+                            aria-label="Decrease quantity"
+                          >
+                            <FiMinus />
+                          </button>
+
+                          <span className="min-w-[36px] text-center text-sm font-semibold text-gray-900">
+                            {item.quantity}
+                          </span>
+
+                          <button
+                            type="button"
+                            onClick={() => dispatch(addToCart(item))}
+                            disabled={atMaxStock}
+                            className="grid cursor-pointer h-9 w-9 place-items-center rounded-xl hover:bg-black/5 active:scale-[0.98] transition disabled:opacity-40 disabled:cursor-not-allowed"
+                            aria-label="Increase quantity"
+                          >
+                            <FiPlus />
+                          </button>
+                        </div>
+
                         <button
                           type="button"
                           onClick={() =>
                             dispatch(
-                              decreaseQuantity({
+                              removeFromCart({
                                 id: item.id,
-                                size: item.size,
+                                sizeId: selectedSize.id,
                               }),
                             )
                           }
-                          className="grid cursor-pointer h-9 w-9 place-items-center rounded-xl hover:bg-black/5 active:scale-[0.98] transition"
-                          aria-label="Decrease quantity"
+                          className="inline-flex cursor-pointer items-center gap-2 rounded-2xl border border-black/10 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-black/5 transition"
                         >
-                          <FiMinus />
-                        </button>
-
-                        <span className="min-w-[36px] text-center text-sm font-semibold text-gray-900">
-                          {item.quantity}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() => dispatch(addToCart(item))}
-                          className="grid cursor-pointer h-9 w-9 place-items-center rounded-xl hover:bg-black/5 active:scale-[0.98] transition"
-                          aria-label="Increase quantity"
-                        >
-                          <FiPlus />
+                          <FiTrash2 />
+                          Remove
                         </button>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() =>
-                          dispatch(
-                            removeFromCart({ id: item.id, size: item.size }),
-                          )
-                        }
-                        className="inline-flex cursor-pointer items-center gap-2 rounded-2xl border border-black/10 bg-white px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-black/5 transition"
-                      >
-                        <FiTrash2 />
-                        Remove
-                      </button>
+                      {atMaxStock && (
+                        <p className="mt-2 text-xs text-amber-600">
+                          Max stock reached
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <aside className="h-fit rounded-3xl border border-black/10 bg-white p-6 shadow-sm lg:sticky lg:top-24">

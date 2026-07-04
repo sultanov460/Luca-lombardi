@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
       price_data: {
         currency: "usd",
         product_data: {
-          name: `${item.title} (Size: ${item.size})`,
+          name: `${item.title} (Size: ${item.sizes[0].label})`,
         },
         unit_amount: parsePriceToCents(item.price),
       },

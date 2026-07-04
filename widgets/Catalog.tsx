@@ -1,16 +1,16 @@
 "use client";
 
 import { Container } from "@/components/Container";
-import { CatalogItem } from "@/types/catalogData";
 import { useState } from "react";
 import { ProductCard } from "./ProductCard";
+import { Product } from "@/types/product";
 
-export const Catalog = ({ catalogData }: { catalogData: CatalogItem[] }) => {
+export const Catalog = ({ catalogData }: { catalogData: Product[] }) => {
   const [showMore, setShowMore] = useState(4);
   return (
     <div className="py-30">
       <Container className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {catalogData.slice(0, showMore).map((card: CatalogItem) => (
+        {catalogData.slice(0, showMore).map((card: Product) => (
           <ProductCard key={card.id} card={card} />
         ))}
       </Container>
