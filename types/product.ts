@@ -1,3 +1,9 @@
+export interface ProductSize {
+  id: number;
+  label: string;
+  stock: number;
+}
+
 export interface Product {
   id: string;
   title: string;
@@ -5,6 +11,7 @@ export interface Product {
   price: string;
   isNew: boolean;
   collection: string;
+  sizes: ProductSize[];
 }
 
 export type Size = "S" | "M" | "L";

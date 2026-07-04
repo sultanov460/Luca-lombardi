@@ -89,6 +89,13 @@ export const menCatalog = [
     price: "129$",
     isNew: false,
     collection: "men-collection",
+    sizes: [
+      { id: 1, label: "XS", stock: 50 },
+      { id: 2, label: "S", stock: 50 },
+      { id: 3, label: "M", stock: 50 },
+      { id: 4, label: "L", stock: 50 },
+      { id: 5, label: "XL", stock: 50 },
+    ],
   },
   {
     id: "m2",
@@ -97,6 +104,13 @@ export const menCatalog = [
     price: "99$",
     isNew: true,
     collection: "men-collection",
+    sizes: [
+      { id: 1, label: "XS", stock: 0 },
+      { id: 2, label: "S", stock: 50 },
+      { id: 3, label: "M", stock: 50 },
+      { id: 4, label: "L", stock: 50 },
+      { id: 5, label: "XL", stock: 50 },
+    ],
   },
   {
     id: "m3",
@@ -105,6 +119,13 @@ export const menCatalog = [
     price: "179$",
     isNew: false,
     collection: "men-collection",
+    sizes: [
+      { id: 1, label: "XS", stock: 50 },
+      { id: 2, label: "S", stock: 50 },
+      { id: 3, label: "M", stock: 50 },
+      { id: 4, label: "L", stock: 50 },
+      { id: 5, label: "XL", stock: 0 },
+    ],
   },
   {
     id: "m4",
@@ -113,6 +134,13 @@ export const menCatalog = [
     price: "1057$",
     isNew: true,
     collection: "men-collection",
+    sizes: [
+      { id: 1, label: "XS", stock: 50 },
+      { id: 2, label: "S", stock: 50 },
+      { id: 3, label: "M", stock: 50 },
+      { id: 4, label: "L", stock: 50 },
+      { id: 5, label: "XL", stock: 50 },
+    ],
   },
   {
     id: "m5",
@@ -121,6 +149,13 @@ export const menCatalog = [
     price: "199$",
     isNew: false,
     collection: "men-collection",
+    sizes: [
+      { id: 1, label: "XS", stock: 50 },
+      { id: 2, label: "S", stock: 50 },
+      { id: 3, label: "M", stock: 50 },
+      { id: 4, label: "L", stock: 50 },
+      { id: 5, label: "XL", stock: 50 },
+    ],
   },
   {
     id: "m6",

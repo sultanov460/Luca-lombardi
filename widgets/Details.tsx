@@ -5,28 +5,37 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { BreadCrumb } from "./BreadCrumb";
 import { Product, Size } from "@/types/product";
 import { addToCart } from "@/store/slices/cartSlice";
+import { SizeSelector } from "@/components/SizeSelector";
 
 interface DetailsProps {
   product: Product;
 }
 
-const SIZES: Size[] = ["S", "M", "L"];
-
 export default function Details({ product }: DetailsProps) {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { user, loading } = useAppSelector((state) => state.auth);
-  const [selectedSize, setSelectedSize] = useState<Size>("M");
+  const [selectedSizeId, setSelectedSizeId] = useState<number | null>(null);
+  const [sizeError, setSizeError] = useState<string | null>(null);
+
+  const selectedSize = product.sizes.find((s) => s.id === selectedSizeId);
 
   const handleAddToCart = () => {
     if (loading) return;
+
+    if (!selectedSize) return setSizeError("Please select a size!");
 
     if (!user) {
       router.push("/login");
       return;
     }
 
-    dispatch(addToCart({ ...product, size: selectedSize, quantity: 1 }));
+    // dispatch(addToCart({ ...product, size: selectedSize, quantity: 1 }));
+  };
+
+  const handleCartSelect = (sizeId: number) => {
+    setSelectedSizeId(sizeId);
+    setSizeError(null);
   };
 
   return (
@@ -64,25 +73,15 @@ export default function Details({ product }: DetailsProps) {
                 Premium look, everyday comfort.
               </p>
 
-              <div className="mt-6">
-                <p className="text-xs font-semibold text-zinc-900 mb-2">Size</p>
-                <div className="flex gap-2">
-                  {SIZES.map((size) => (
-                    <button
-                      key={size}
-                      type="button"
-                      onClick={() => setSelectedSize(size)}
-                      className={`h-11 w-11 rounded-xl border text-sm font-semibold transition cursor-pointer ${
-                        selectedSize === size
-                          ? "bg-zinc-900 text-white border-zinc-900"
-                          : "bg-white text-zinc-900 border-zinc-200 hover:border-zinc-400"
-                      }`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <SizeSelector
+                sizes={product.sizes}
+                selectedSizeId={selectedSizeId}
+                onSelect={handleCartSelect}
+              />
+
+              {sizeError && (
+                <p className="text-red-500 text-sm mt-2">{sizeError}</p>
+              )}
 
               <div className="mt-7 flex flex-col gap-3">
                 <button
