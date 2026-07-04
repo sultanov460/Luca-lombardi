@@ -11,7 +11,7 @@ const initialState: InitialState = {
 
 interface CartItemKey {
   id: string;
-  size: string;
+  sizeId: number;
 }
 
 export const cartSlice = createSlice({
@@ -21,11 +21,14 @@ export const cartSlice = createSlice({
     addToCart: (state, action: PayloadAction<CartProduct>) => {
       const product = action.payload;
       const existingItem = state.items.find(
-        (item) => item.id === product.id && item.size === product.size,
+        (item) =>
+          item.id === product.id && item.sizes[0].id === product.sizes[0].id,
       );
 
       if (existingItem) {
-        existingItem.quantity += 1;
+        if (existingItem.quantity < existingItem.sizes[0].stock) {
+          existingItem.quantity += 1;
+        }
       } else {
         state.items.unshift({ ...product, quantity: 1 });
       }
@@ -36,16 +39,16 @@ export const cartSlice = createSlice({
     },
 
     removeFromCart: (state, action: PayloadAction<CartItemKey>) => {
-      const { id, size } = action.payload;
+      const { id, sizeId } = action.payload;
       state.items = state.items.filter(
-        (item) => !(item.id === id && item.size === size),
+        (item) => !(item.id === id && item.sizes[0].id === sizeId),
       );
     },
 
     decreaseQuantity: (state, action: PayloadAction<CartItemKey>) => {
-      const { id, size } = action.payload;
+      const { id, sizeId } = action.payload;
       const item = state.items.find(
-        (item) => item.id === id && item.size === size,
+        (item) => item.id === id && item.sizes[0].id === sizeId,
       );
 
       if (!item) {
@@ -57,7 +60,7 @@ export const cartSlice = createSlice({
         item.quantity -= 1;
       } else {
         state.items = state.items.filter(
-          (item) => !(item.id === id && item.size === size),
+          (item) => !(item.id === id && item.sizes[0].id === sizeId),
         );
       }
     },

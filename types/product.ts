@@ -14,9 +14,6 @@ export interface Product {
   sizes: ProductSize[];
 }
 
-export type Size = "S" | "M" | "L";
-
 export interface CartProduct extends Product {
   quantity: number;
-  size: Size;
 }

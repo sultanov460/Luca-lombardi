@@ -1,10 +1,10 @@
 "use client";
 
-import { CatalogItem } from "@/types/catalogData";
+import { Product } from "@/types/product";
 import Link from "next/link";
 
 interface Props {
-  card: CatalogItem;
+  card: Product;
 }
 
 export const ProductCard = ({ card }: Props) => {
