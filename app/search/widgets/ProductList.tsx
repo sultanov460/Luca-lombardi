@@ -3,11 +3,15 @@
 import Fuse from "fuse.js";
 import { useAppSelector } from "@/store/hooks";
 import { useMemo } from "react";
-import { products } from "@/data/catalog";
+import { Product } from "@/types/product";
 import { ProductCard } from "@/widgets/ProductCard";
 import { Container } from "@/components/Container";
 
-export const ProductList = () => {
+interface ProductListProps {
+  products: Product[];
+}
+
+export const ProductList = ({ products }: ProductListProps) => {
   const query = useAppSelector((state) => state.search.query);
 
   const fuse = useMemo(() => {
@@ -15,7 +19,7 @@ export const ProductList = () => {
       keys: ["title", "collection"],
       threshold: 0.4,
     });
-  }, []);
+  }, [products]);
 
   const filteredProducts = query
     ? fuse.search(query).map((r) => r.item)

@@ -1,4 +1,4 @@
-import { menCatalog, sunglassesCatalog, womenCatalog } from "@/data/catalog";
+import { getProductsByCollection } from "@/lib/products";
 import Banner from "@/widgets/Banner";
 import NewCollectionList from "@/widgets/NewCollection";
 import { Metadata } from "next";
@@ -7,7 +7,13 @@ export const metadata: Metadata = {
   title: "New Collection",
 };
 
-export default function NewCollectionPage() {
+export default async function NewCollectionPage() {
+  const [menCatalog, womenCatalog, sunglassesCatalog] = await Promise.all([
+    getProductsByCollection("men-collection"),
+    getProductsByCollection("women-collection"),
+    getProductsByCollection("sunglasses-collection"),
+  ]);
+
   return (
     <div>
       <Banner

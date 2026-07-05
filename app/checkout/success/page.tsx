@@ -1,7 +1,18 @@
+"use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
 import { FiCheckCircle, FiArrowRight, FiMail } from "react-icons/fi";
+import { useAppDispatch } from "@/store/hooks";
+import { clearCart } from "@/store/slices/cartSlice";
 
 export default function SuccessPage() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(clearCart());
+  }, [dispatch]);
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md rounded-3xl border border-black/10 bg-white p-8 sm:p-10 text-center shadow-sm">
