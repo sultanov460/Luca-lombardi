@@ -1,13 +1,17 @@
 import Banner from "@/widgets/Banner";
 import { Catalog } from "@/widgets/Catalog";
-import { sunglassesCatalog } from "@/data/catalog";
+import { getProductsByCollection } from "@/lib/products";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Sunglasses",
 };
 
-export default function Men() {
+export default async function Sunglasses() {
+  const sunglassesCatalog = await getProductsByCollection(
+    "sunglasses-collection",
+  );
+
   return (
     <>
       <Banner

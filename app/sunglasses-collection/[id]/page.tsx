@@ -1,4 +1,4 @@
-import { sunglassesCatalog } from "@/data/catalog";
+import { getProductById } from "@/lib/products";
 import Details from "@/widgets/Details";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 
 export default async function SunglassesDetailsPage({ params }: Props) {
   const { id } = await params;
-  const product = sunglassesCatalog.find((p) => p.id === String(id));
+  const product = await getProductById(id);
 
   if (!product) {
     return <div className="p-20 text-center">Product not found</div>;
