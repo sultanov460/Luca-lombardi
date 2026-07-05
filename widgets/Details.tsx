@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { BreadCrumb } from "./BreadCrumb";
-import { Product, Size } from "@/types/product";
+import { Product } from "@/types/product";
 import { addToCart } from "@/store/slices/cartSlice";
 import { SizeSelector } from "@/components/SizeSelector";
 
