@@ -43,7 +43,6 @@ export async function POST(req: NextRequest) {
 
         const order = orderSnap.data()!;
 
-        // Защита от повторной обработки одного и того же события
         if (order.status === "paid") {
           return;
         }
@@ -54,9 +53,18 @@ export async function POST(req: NextRequest) {
           quantity: number;
         }[];
 
-        for (const item of items) {
-          const productRef = db.collection("products").doc(item.productId);
-          const productSnap = await tx.get(productRef);
+        // --- ФАЗА 1: ВСЕ ЧТЕНИЯ ---
+        const productRefs = items.map((item) =>
+          db.collection("products").doc(item.productId),
+        );
+        const productSnaps = await Promise.all(
+          productRefs.map((ref) => tx.get(ref)),
+        );
+
+        // --- ФАЗА 2: ВСЕ ЗАПИСИ ---
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          const productSnap = productSnaps[i];
 
           if (!productSnap.exists) continue;
 
@@ -76,7 +84,7 @@ export async function POST(req: NextRequest) {
             stock: Math.max(0, updatedSizes[sizeIndex].stock - item.quantity),
           };
 
-          tx.update(productRef, { sizes: updatedSizes });
+          tx.update(productRefs[i], { sizes: updatedSizes });
         }
 
         tx.update(orderRef, {
@@ -94,11 +102,16 @@ export async function POST(req: NextRequest) {
     const orderId = session.metadata?.orderId;
 
     if (orderId) {
-      await db
-        .collection("orders")
-        .doc(orderId)
-        .update({ status: "expired" })
-        .catch((err) => console.error("Failed to mark order expired:", err));
+      try {
+        const orderRef = db.collection("orders").doc(orderId);
+        const orderSnap = await orderRef.get();
+
+        if (orderSnap.exists && orderSnap.data()?.status === "pending") {
+          await orderRef.update({ status: "expired" });
+        }
+      } catch (err) {
+        console.error("Failed to mark order expired:", err);
+      }
     }
   }
 

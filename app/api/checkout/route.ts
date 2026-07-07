@@ -9,14 +9,23 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: NextRequest) {
   try {
-    const { items }: { items: CartProduct[] } = await req.json();
+    const { items, userId }: { items: CartProduct[]; userId?: string } =
+      await req.json();
 
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
     }
 
+    if (!userId) {
+      return NextResponse.json(
+        { error: "User must be logged in to checkout" },
+        { status: 401 },
+      );
+    }
+
     const line_items = [];
     const orderItems = [];
+    let totalCents = 0;
 
     for (const item of items) {
       const requestedSize = item.sizes[0];
@@ -44,26 +53,35 @@ export async function POST(req: NextRequest) {
         );
       }
 
+      const unitPriceCents = parsePriceToCents(data.price);
+      totalCents += unitPriceCents * item.quantity;
+
       line_items.push({
         price_data: {
           currency: "usd",
           product_data: {
             name: `${data.title} (Size: ${size.label})`,
           },
-          unit_amount: parsePriceToCents(data.price),
+          unit_amount: unitPriceCents,
         },
         quantity: item.quantity,
       });
 
       orderItems.push({
         productId: item.id,
+        title: data.title,
+        src: data.src,
         sizeId: size.id,
+        sizeLabel: size.label,
+        unitPriceCents,
         quantity: item.quantity,
       });
     }
 
     const orderRef = await db.collection("orders").add({
+      userId,
       items: orderItems,
+      totalCents,
       status: "pending",
       createdAt: new Date().toISOString(),
     });
@@ -77,6 +95,8 @@ export async function POST(req: NextRequest) {
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cart`,
     });
+
+    await orderRef.update({ stripeSessionId: session.id });
 
     return NextResponse.json({ url: session.url });
   } catch (err) {

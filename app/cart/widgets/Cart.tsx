@@ -13,6 +13,7 @@ import { FiMinus, FiPlus, FiTrash2 } from "react-icons/fi";
 
 export const Cart = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
+  const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
 
   const subtotal = cartItems.reduce((sum, item) => {
@@ -24,7 +25,7 @@ export const Cart = () => {
     const res = await fetch("/api/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cartItems }),
+      body: JSON.stringify({ items: cartItems, userId: user?.uid }),
     });
 
     const data = await res.json();

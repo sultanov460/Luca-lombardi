@@ -6,7 +6,7 @@ import { FormEvent, useState } from "react";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { LuUser } from "react-icons/lu";
 import { GrClose } from "react-icons/gr";
-import { FiLogOut, FiShoppingCart } from "react-icons/fi";
+import { FiLogOut, FiShoppingCart, FiPackage } from "react-icons/fi";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { firebaseAuth } from "@/lib/firebase";
@@ -75,6 +75,15 @@ export const Navbar = () => {
 
             {!loading && user && (
               <div className="flex items-center gap-6">
+                <Link
+                  href="/orders"
+                  className="flex cursor-pointer items-center gap-2 text-sm transition hover:opacity-50"
+                  title="My Orders"
+                >
+                  <FiPackage size={24} />
+                  <span className="hidden md:block">Orders</span>
+                </Link>
+
                 <Link
                   href="/cart"
                   className="relative flex cursor-pointer items-center gap-2 text-sm transition hover:opacity-50"
