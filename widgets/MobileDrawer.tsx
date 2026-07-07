@@ -2,8 +2,9 @@
 
 import clsx from "clsx";
 import Link from "next/link";
+import { useEffect } from "react";
 import Search from "./Search";
-import { FiLogOut, FiShoppingCart } from "react-icons/fi";
+import { FiLogOut, FiShoppingCart, FiPackage } from "react-icons/fi";
 
 type NavLink = { id: number; title: string; href: string };
 
@@ -22,6 +23,30 @@ export function MobileDrawer({
   onLogout,
   isAuthenticated,
 }: Props) {
+  // Блокируем скролл фона, пока дровер открыт
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [isOpen]);
+
+  // Закрытие по Escape
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
   return (
     <>
       {/* Overlay */}
@@ -67,28 +92,42 @@ export function MobileDrawer({
 
           {/* Bottom actions */}
           <div className="px-5 pb-6">
-            <div className="flex items-center gap-3">
+            <div className="grid grid-cols-2 gap-3">
               <Link
                 href="/cart"
                 onClick={onClose}
-                className="flex-1 rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-sm font-medium text-gray-900 hover:bg-black/5 transition flex items-center justify-center gap-2"
+                className={clsx(
+                  "rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-sm font-medium text-gray-900 hover:bg-black/5 transition flex items-center justify-center gap-2",
+                  !isAuthenticated && "col-span-2",
+                )}
               >
                 <FiShoppingCart size={18} />
                 Cart
               </Link>
 
               {isAuthenticated && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose();
-                    onLogout();
-                  }}
-                  className="flex-1 rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-sm font-medium text-gray-900 hover:bg-black/5 transition flex items-center justify-center gap-2"
-                >
-                  <FiLogOut size={18} />
-                  Logout
-                </button>
+                <>
+                  <Link
+                    href="/orders"
+                    onClick={onClose}
+                    className="rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-sm font-medium text-gray-900 hover:bg-black/5 transition flex items-center justify-center gap-2"
+                  >
+                    <FiPackage size={18} />
+                    Orders
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      onLogout();
+                    }}
+                    className="col-span-2 rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-sm font-medium text-gray-900 hover:bg-black/5 transition flex items-center justify-center gap-2"
+                  >
+                    <FiLogOut size={18} />
+                    Logout
+                  </button>
+                </>
               )}
             </div>
           </div>
