@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { auth, db } from "@/lib/firebase-admin";
+import { sendOrderCancelledEmail } from "@/lib/email";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -58,6 +59,19 @@ export async function POST(req: NextRequest, { params }: Props) {
       status: "cancelled",
       cancelledAt: new Date().toISOString(),
     });
+
+    try {
+      const userRecord = await auth.getUser(decoded.uid);
+      if (userRecord.email) {
+        await sendOrderCancelledEmail(userRecord.email, {
+          orderId,
+          items: order.items,
+          totalCents: order.totalCents,
+        });
+      }
+    } catch (emailErr) {
+      console.error("Failed to send cancellation email:", emailErr);
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
