@@ -1,7 +1,8 @@
 // app/api/webhooks/stripe/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { auth, db } from "@/lib/firebase-admin";
+import { db } from "@/lib/firebase-admin";
+import { adminAuth as auth } from "@/lib/firebase-admin-auth";
 import { sendOrderConfirmationEmail } from "@/lib/email";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);

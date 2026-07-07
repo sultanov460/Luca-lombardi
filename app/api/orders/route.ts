@@ -1,6 +1,7 @@
 // app/api/orders/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { auth, db } from "@/lib/firebase-admin";
+import { db } from "@/lib/firebase-admin";
+import { adminAuth as auth } from "@/lib/firebase-admin-auth";
 
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
