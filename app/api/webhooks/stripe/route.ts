@@ -1,7 +1,8 @@
 // app/api/webhooks/stripe/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { db } from "@/lib/firebase-admin";
+import { auth, db } from "@/lib/firebase-admin";
+import { sendOrderConfirmationEmail } from "@/lib/email";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -33,7 +34,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-      await db.runTransaction(async (tx) => {
+      const paidOrder = await db.runTransaction(async (tx) => {
         const orderRef = db.collection("orders").doc(orderId);
         const orderSnap = await tx.get(orderRef);
 
@@ -44,7 +45,7 @@ export async function POST(req: NextRequest) {
         const order = orderSnap.data()!;
 
         if (order.status === "paid") {
-          return;
+          return null;
         }
 
         const items = order.items as {
@@ -53,7 +54,6 @@ export async function POST(req: NextRequest) {
           quantity: number;
         }[];
 
-        // --- ФАЗА 1: ВСЕ ЧТЕНИЯ ---
         const productRefs = items.map((item) =>
           db.collection("products").doc(item.productId),
         );
@@ -61,7 +61,6 @@ export async function POST(req: NextRequest) {
           productRefs.map((ref) => tx.get(ref)),
         );
 
-        // --- ФАЗА 2: ВСЕ ЗАПИСИ ---
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
           const productSnap = productSnaps[i];
@@ -91,7 +90,28 @@ export async function POST(req: NextRequest) {
           status: "paid",
           paidAt: new Date().toISOString(),
         });
+
+        return {
+          userId: order.userId,
+          items: order.items,
+          totalCents: order.totalCents,
+        };
       });
+
+      if (paidOrder) {
+        try {
+          const userRecord = await auth.getUser(paidOrder.userId);
+          if (userRecord.email) {
+            await sendOrderConfirmationEmail(userRecord.email, {
+              orderId,
+              items: paidOrder.items,
+              totalCents: paidOrder.totalCents,
+            });
+          }
+        } catch (emailErr) {
+          console.error("Failed to send confirmation email:", emailErr);
+        }
+      }
     } catch (err) {
       console.error("Failed to process order after payment:", err);
     }
