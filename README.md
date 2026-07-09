@@ -1,36 +1,241 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+
+# LUCA LOMBARDI
+
+### Luxury Fashion E-Commerce Platform
+
+A modern full-stack luxury fashion e-commerce application built with **Next.js**, **TypeScript**, **Tailwind CSS**, **Stripe**, and **Supabase**.
+
+🌐 **Live Demo:** https://www.luca-lombardi.store/
+
+</div>
+
+---
+
+## About
+
+LUCA LOMBARDI is a modern luxury fashion e-commerce platform focused on performance, user experience, and clean design.
+
+The project simulates a real-world online store with secure authentication, online payments, product management, search functionality, and a responsive interface optimized for all devices.
+
+This project was created to demonstrate production-level Frontend development skills using modern web technologies.
+
+---
+
+## Features
+
+### Authentication
+
+- User Registration
+- User Login
+- Secure Authentication
+- Protected Routes
+
+### Shopping
+
+- Product Catalog
+- Product Details
+- Product Search
+- Categories
+- Responsive Product Grid
+
+### Cart
+
+- Add to Cart
+- Remove Products
+- Quantity Management
+- Total Price Calculation
+
+### Payments
+
+- Stripe Checkout Integration
+- Secure Payment Processing
+
+### User Experience
+
+- Responsive Design
+- Mobile Friendly
+- Fast Loading
+- Clean UI
+- Smooth Animations
+- Loading States
+- Error Handling
+
+---
+
+## Tech Stack
+
+### Frontend
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+
+### Backend & Database
+
+- Supabase
+- PostgreSQL
+
+### Payments
+
+- Stripe
+
+### Deployment
+
+- Vercel
+
+---
+
+## Screenshots
+
+> Add screenshots here
+
+```
+public/
+ ├── home.png
+ ├── product.png
+ ├── cart.png
+ └── checkout.png
+```
+
+Example:
+
+```md
+## Home Page
+
+![Home](./public/home.png)
+
+## Product Page
+
+![Product](./public/product.png)
+```
+
+---
+
+## Project Structure
+
+```
+src
+│
+├── app
+├── components
+├── features
+├── hooks
+├── lib
+├── services
+├── types
+└── utils
+```
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Clone repository
+
+```bash
+git clone https://github.com/sultanov460/Luca-lombardi.git
+```
+
+### Go to project
+
+```bash
+cd Luca-lombardi
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Create environment variables
+
+Create a `.env.local`
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+STRIPE_SECRET_KEY=
+
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
+
+### Run development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Performance
 
-To learn more about Next.js, take a look at the following resources:
+- Server Components
+- Image Optimization
+- Dynamic Routing
+- SEO Friendly
+- Responsive Layout
+- Optimized Loading
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Future Improvements
 
-## Deploy on Vercel
+- Wishlist
+- Product Reviews
+- Admin Dashboard
+- Order History
+- Email Notifications
+- Coupons & Discounts
+- Multi-language Support
+- Dark Mode
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Why This Project?
+
+This project demonstrates practical experience with:
+
+- Modern React Architecture
+- Next.js App Router
+- TypeScript
+- Authentication
+- Database Integration
+- Payment Integration
+- State Management
+- Responsive Design
+- API Development
+- Production Deployment
+
+---
+
+## Author
+
+**Rafiq Sultanov**
+
+Frontend Developer
+
+GitHub:
+https://github.com/sultanov460
+
+Portfolio:
+https://www.luca-lombardi.store/
+
+---
+
+## License
+
+This project is for educational and portfolio purposes.
